@@ -1,0 +1,113 @@
+.el-drawer__header button.el-drawer__close-btn {
+    display: none;
+}
+
+.el-drawer__header {
+    margin-bottom: 0;
+    padding: 14px 0 14px 20px;
+    /* border-bottom: 1px solid #f2f2f2; */
+    color: #323232;
+    font-size: 16px;
+}
+
+.demo-drawer__content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.drawer_content {
+    flex: 1;
+}
+
+.demo-drawer__content>div {
+    border-top: 1px solid #F2F2F2;
+}
+
+.el-button {
+    min-width: 79px;
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 2px;
+    background: #46A6FE;
+}
+
+.el-button.el-button--default {
+    color: #323232;
+    background: #f2f2f2;
+}
+
+.demo-drawer__footer {
+    padding: 10px 30px;
+    border-top: 1px solid #F2F2F2;
+}
+
+.demo-drawer__footer .el-button {
+    float: right;
+    margin-right: 10px;
+}
+
+.el-dialog {
+    width: 520px;
+    border: 1px solid #DDE1E5;
+    border-radius: 3px;
+}
+
+.el-dialog__header {
+    padding: 0 0 0 20px;
+    line-height: 50px;
+    height: 50px;
+    background: #fff;
+    border-bottom: 1px solid #F2F2F2;
+}
+
+.el-dialog__header .el-dialog__title {
+    font-size: 16px;
+    line-height: 50px;
+    color: #333333;
+}
+
+.el-dialog__header .el-dialog__headerbtn {
+    height: 12px;
+    width: 12px;
+}
+
+.el-dialog__header .el-icon-close {
+    width: 12px;
+    height: 12px;
+    float: left;
+}
+
+.el-dialog__header .el-icon-close::before {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background: url(~@/assets/images/add-close.png) no-repeat center;
+    background-size: 100% 100%;
+    content: "";
+}
+
+.el-dialog__footer {
+    border-top: 1px solid #F2F2F2;
+    padding-bottom: 10px;
+}
+
+.el-checkbox,
+.el-checkbox__input.is-checked+.el-checkbox__label,
+.el-radio,
+.el-radio__input.is-checked+.el-radio__label,
+.el-dialog__body,
+.el-tree {
+    color: #333;
+}
+
+.el-radio__label {
+    font-size: 12px;
+}
+
+.my-el-custom-spinner {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    background: url(~@/assets/images/loading.gif) no-repeat center;
+}
