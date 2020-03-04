@@ -23,7 +23,7 @@ function tryHideFullScreenLoading() {
     if (needLoadingRequestCount <= 0) return
     needLoadingRequestCount--
     if (needLoadingRequestCount === 0) {
-        setTimeout(function () {
+        setTimeout(function() {
             endLoading()
         }, 200)
     }
@@ -86,7 +86,7 @@ _axios.interceptors.response.use(res => { // 对响应数据做点什么
     return Promise.reject(err);
 });
 
-Plugin.install = function (Vue, options) {
+Plugin.install = function(Vue, options) {
     Vue.axios = _axios;
     window.axios = _axios;
     Object.defineProperties(Vue.prototype, {
