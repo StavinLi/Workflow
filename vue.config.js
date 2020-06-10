@@ -8,6 +8,7 @@ function resolve(dir) {
 module.exports = {
     lintOnSave: false,
     productionSourceMap: false,
+    publicPath: process.env.NODE_ENV === "production" ? '/Workflow/' : '/',
     devServer: {
         disableHostCheck: true,
         https: false, // https:{type:Boolean}
