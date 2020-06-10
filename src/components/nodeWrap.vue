@@ -660,7 +660,7 @@ export default {
         addCondition() {
             this.conditionList = [];
             this.conditionVisible = true;
-            this.$axios.get("/conditions.json?tableId=" + this.tableId).then(res => {
+            this.$axios.get(`${process.env.BASE_URL}conditions.json?tableId=${this.tableId}`).then(res => {
                 this.conditions = res.data;
                 if (this.conditionConfig.conditionList) {
                     for (var i = 0; i < this.conditionConfig.conditionList.length; i++) {
@@ -752,11 +752,11 @@ export default {
                 if (event.target.value) {
                     if (type == 1) {
                         this.departments.childDepartments = [];
-                        this.$axios.get(`/employees.json?searchName=${event.target.value}&pageNum=1&pageSize=30`).then(res => {
+                        this.$axios.get(`${process.env.BASE_URL}employees.json?searchName=${event.target.value}&pageNum=1&pageSize=30`).then(res => {
                             this.departments.employees = res.data.list
                         })
                     } else {
-                        this.$axios.get(`/roles.json?searchName=${event.target.value}&pageNum=1&pageSize=30`).then(res => {
+                        this.$axios.get(`${process.env.BASE_URL}roles.json?searchName=${event.target.value}&pageNum=1&pageSize=30`).then(res => {
                             this.roles = res.data.list
                         })
                     }
@@ -1026,12 +1026,12 @@ export default {
             arr.splice(includesIndex, 1);
         },
         getRoleList() {
-            this.$axios.get("/roles.json").then(res => {
+            this.$axios.get(`${process.env.BASE_URL}roles.json`).then(res => {
                 this.roles = res.data.list;
             })
         },
         getDepartmentList(parentId = 0) {
-            this.$axios.get("/departments.json?parentId=" + parentId).then(res => {
+            this.$axios.get(`${process.env.BASE_URL}departments.json?parentId=${parentId}`).then(res => {
                 this.departments = res.data;
             })
         },
