@@ -38,6 +38,5 @@ All.prototype = {
         }
     },
 }
-window.func = new All();
 
-export default func;
+export default new All();

@@ -69,7 +69,7 @@
                 <addNode :childNodeP.sync="nodeConfig.childNode"></addNode>
             </div>
         </div>
-        <el-drawer title="发起人" :visible.sync="promoterDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="savePromoter"> 
+        <el-drawer :append-to-body="true" title="发起人" :visible.sync="promoterDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="savePromoter"> 
             <div class="demo-drawer__content">
                 <div class="promoter_content drawer_content">
                     <p>{{arrToStr(flowPermission1)?arrToStr(flowPermission1):'所有人'}}</p>
@@ -125,7 +125,7 @@
                 </el-dialog>
             </div>
         </el-drawer>
-        <el-drawer title="审批人设置" :visible.sync="approverDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="saveApprover"> 
+        <el-drawer :append-to-body="true" title="审批人设置" :visible.sync="approverDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="saveApprover"> 
             <div class="demo-drawer__content">
                 <div class="drawer_content">
                     <div class="approver_content">
@@ -275,7 +275,7 @@
                 </el-dialog>
             </div>
         </el-drawer>
-        <el-drawer title="抄送人设置" :visible.sync="copyerDrawer" direction="rtl" class="set_copyer" size="550px" :before-close="saveCopyer"> 
+        <el-drawer :append-to-body="true" title="抄送人设置" :visible.sync="copyerDrawer" direction="rtl" class="set_copyer" size="550px" :before-close="saveCopyer"> 
             <div class="demo-drawer__content">
                 <div class="copyer_content drawer_content">
                     <el-button type="primary" @click="addCopyer">添加成员</el-button>
@@ -348,8 +348,8 @@
                 </el-dialog>
             </div>
         </el-drawer>
-        <el-drawer title="条件设置" :visible.sync="conditionDrawer" direction="rtl" class="condition_copyer" size="550px" :before-close="saveCondition"> 
-            <select v-model="conditionConfig.priorityLevel">
+        <el-drawer :append-to-body="true" title="条件设置" :visible.sync="conditionDrawer" direction="rtl" class="condition_copyer" size="550px" :before-close="saveCondition"> 
+            <select v-model="conditionConfig.priorityLevel" class="priority_level">
                 <option v-for="item in conditionsConfig.conditionNodes.length" :value="item" :key="item">优先级{{item}}</option>
             </select>
             <div class="demo-drawer__content">
@@ -686,7 +686,7 @@ export default {
             //1.弹窗有，外面无+
             //2.弹窗有，外面有不变
             for (var i = 0; i < this.conditionList.length; i++) {
-                var { columnId, showName, columnName, showType, columnName, columnType, fixedDownBoxValue } = this.conditionList[i];
+                var { columnId, showName, columnName, showType, columnType, fixedDownBoxValue } = this.conditionList[i];
                 if (this.toggleClass(this.conditionConfig.conditionList, this.conditionList[i], "columnId")) {
                     continue;
                 }
@@ -727,7 +727,7 @@ export default {
                 }
             }
             ////3.弹窗无，外面有-
-            for (var i = this.conditionConfig.conditionList.length - 1; i >= 0; i--) {
+            for (let i = this.conditionConfig.conditionList.length - 1; i >= 0; i--) {
                 if (!this.toggleClass(this.conditionList, this.conditionConfig.conditionList[i], "columnId")) {
                     this.conditionConfig.conditionList.splice(i, 1);
                 }
@@ -829,7 +829,7 @@ export default {
                 }
             }
         },
-        changeRange(val) {
+        changeRange() {
             this.approverConfig.nodeUserList = [];
         },
         changeType(val) {
@@ -1314,7 +1314,7 @@ el-radio-group {
     font-weight: bold;
     line-height: 19px;
 }
-.condition_copyer .el-drawer__body select {
+.condition_copyer .el-drawer__body .priority_level {
     position: absolute;
     top: 11px;
     right: 30px;
