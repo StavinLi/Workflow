@@ -28,7 +28,7 @@
 				</div>
 				<div class="box-scale" id="box-scale" :style="'transform: scale('+nowVal/100+'); transform-origin: 50% 0px 0px;'">
 					<nodeWrap :nodeConfig.sync="nodeConfig" :flowPermission.sync="flowPermission"
-						:isTried.sync="isTried" :directorMaxLevel="directorMaxLevel" :tableId="tableId"></nodeWrap>
+						:isTried.sync="isTried" :tableId="tableId"></nodeWrap>
 					<div class="end-node">
 						<div class="end-node-circle"></div>
 						<div class="end-node-text">流程结束</div>
@@ -57,11 +57,19 @@
 				<el-button type="primary" @click="tipVisible = false">前往修改</el-button>
 			</span>
 		</el-dialog>
+		<promoterDrawer />
+		<approverDrawer  :directorMaxLevel="directorMaxLevel"/>
+		<copyerDrawer />
+		<conditionDrawer />
 	</div>
 </template>
 <script>
+import promoterDrawer from '../../components/promoterDrawer'
+import approverDrawer from '../../components/approverDrawer'
+import copyerDrawer from '../../components/copyerDrawer'
+import conditionDrawer from '../../components/conditionDrawer'
 export default {
-	components: {},
+	components:{promoterDrawer,approverDrawer,copyerDrawer,conditionDrawer},
 	data() {
 		return {
 			isTried: false,
@@ -73,14 +81,13 @@ export default {
 			workFlowDef: {},
 			flowPermission: [],
 			directorMaxLevel: 0,
-			dialogVisible: true,
-			tableId: ""
+			tableId: "",
 		};
 	},
 	created() {
 		this.$axios.get(`${process.env.BASE_URL}data.json`, {
 			workFlowDefId: this.$route.params.workFlowDefId
-		}).then(res => {
+		}).then(res => {			
 			this.processConfig = res.data;
 			this.nodeConfig = this.processConfig.nodeConfig;
 			this.flowPermission = this.processConfig.flowPermission;
