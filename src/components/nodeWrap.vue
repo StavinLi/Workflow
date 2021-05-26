@@ -1031,7 +1031,7 @@ export default {
             })
         },
         getDepartmentList(parentId = 0) {
-            this.$axios.get(`${process.env.BASE_URL}departments.json?parentId=${parentId}`).then(res => {
+            this.$axios.get(`${process.env.BASE_URL}departments${parentId}.json?parentId=${parentId}`).then(res => {
                 this.departments = res.data;
             })
         },

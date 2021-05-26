@@ -1,0 +1,21 @@
+{
+    "code": "200",
+    "msg": "操作成功",
+    "data": {
+        "childDepartments": [],
+        "employees": [{
+            "id": "53128133",
+            "employeeName": "测试3",
+            "isLeave": "0",
+            "open": "false"
+        }],
+        "titleDepartments": [{
+            "departmentId": "324",
+            "departmentKey": "ZNBN",
+            "departmentName": "法务部",
+            "departmentNames": "法务部",
+            "id": "324",
+            "parentId": "0"
+        }]
+    }
+}
