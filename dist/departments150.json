@@ -1,0 +1,26 @@
+{
+    "code": "200",
+    "msg": "操作成功",
+    "data": {
+        "childDepartments": [],
+        "employees": [{
+            "id": "53128112",
+            "employeeName": "测试1",
+            "isLeave": "0",
+            "open": "false"
+        },{
+            "id": "53128113",
+            "employeeName": "测试2",
+            "isLeave": "0",
+            "open": "false"
+        }],
+        "titleDepartments": [{
+            "departmentId": "150",
+            "departmentKey": "RLXZB_V2",
+            "departmentName": "人力行政部",
+            "departmentNames": "人力行政部",
+            "id": "150",
+            "parentId": "0"
+        }]
+    }
+}
