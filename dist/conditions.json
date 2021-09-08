@@ -6,6 +6,7 @@
       "columnId": "1090",
       "showType": "1",
       "showName": "预计采购总费用",
+      "columnName": "planProcurementTotalMoney",
       "columnType": "Double",
       "fixedDownBoxValue": ""
     },
@@ -13,6 +14,7 @@
       "columnId": "1092",
       "showType": "3",
       "showName": "采购类型",
+      "columnName": "procurementType",
       "columnType": "String",
       "fixedDownBoxValue": "{\"1\":{\"key\":\"1\",\"value\":\"新开园区集中采购\",\"column\":\"\",\"type\":\"1\"}}"
     },
@@ -20,6 +22,7 @@
       "columnId": "1093",
       "showType": "1",
       "showName": "园区面积",
+      "columnName": "parkArea",
       "columnType": "Double",
       "fixedDownBoxValue": ""
     }
