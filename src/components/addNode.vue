@@ -51,7 +51,6 @@ export default {
                         "selectMode": 0,
                         "selectRange": 0,
                         "directorLevel": 1,
-                        "replaceByUp": 0,
                         "examineMode": 1,
                         "noHanderAction": 1,
                         "examineEndDirectorLevel": 0,
