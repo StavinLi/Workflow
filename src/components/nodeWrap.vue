@@ -1055,6 +1055,10 @@ export default {
         },
         delTerm(index) {
             this.nodeConfig.conditionNodes.splice(index, 1)
+            this.nodeConfig.conditionNodes.map((item, index) => {
+                item.priorityLevel = index + 1
+                item.nodeName = `条件${index + 1}`
+            });
             for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
                 this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i != this.nodeConfig.conditionNodes.length - 1
             }
