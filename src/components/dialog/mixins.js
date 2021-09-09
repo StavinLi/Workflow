@@ -1,21 +1,14 @@
 export default {
   data(){
     return {
+      visibleDialog: false,
+      searchVal: "",
       activeName: "1",
       departments: {},
       roles: [],
     }
   },
   methods:{
-    handleClick() {
-      this.copyerSearchName = "";
-      this.conditionRoleSearchName = "";
-      if (this.activeName == 1) {
-          this.getDepartmentList();
-      } else {
-          this.getRoleList();
-      }
-    },
     getRoleList() {
       this.$axios.get(`${process.env.BASE_URL}roles.json`).then(res => {
           this.roles = res.data.list;

@@ -36,27 +36,10 @@
 				</div>
 			</section>
 		</div>
-		<el-dialog title="提示" :visible.sync="tipVisible">
-			<div class="ant-confirm-body">
-				<i class="anticon anticon-close-circle" style="color: #f00;"></i>
-				<span class="ant-confirm-title">当前无法发布</span>
-				<div class="ant-confirm-content">
-					<div>
-						<p class="error-modal-desc">以下内容不完善，需进行修改</p>
-						<div class="error-modal-list">
-							<div class="error-modal-item" v-for="(item,index) in tipList" :key="index">
-								<div class="error-modal-item-label">流程设计</div>
-								<div class="error-modal-item-content">{{item.name}} 未选择{{item.type}}</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<span slot="footer" class="dialog-footer">
-				<el-button @click="tipVisible = false">我知道了</el-button>
-				<el-button type="primary" @click="tipVisible = false">前往修改</el-button>
-			</span>
-		</el-dialog>
+		<errorDialog 
+			:visible.sync="tipVisible"
+			:list="tipList"	
+		/>
 		<promoterDrawer />
 		<approverDrawer  :directorMaxLevel="directorMaxLevel"/>
 		<copyerDrawer />
@@ -64,12 +47,19 @@
 	</div>
 </template>
 <script>
+import errorDialog from '@/components/dialog/errorDialog'
 import promoterDrawer from '@/components/drawer/promoterDrawer'
 import approverDrawer from '@/components/drawer/approverDrawer'
 import copyerDrawer from '@/components/drawer/copyerDrawer'
 import conditionDrawer from '@/components/drawer/conditionDrawer'
 export default {
-	components:{promoterDrawer,approverDrawer,copyerDrawer,conditionDrawer},
+	components:{
+		errorDialog,
+		promoterDrawer,
+		approverDrawer,
+		copyerDrawer,
+		conditionDrawer
+	},
 	data() {
 		return {
 			isTried: false,
@@ -106,7 +96,7 @@ export default {
 				let {type,error,nodeName,conditionNodes} = childNode
 				if (type == 1 || type == 2) {
 					if (error) {
-						this.tipList.push({ name: nodeName, type: ["审核人","抄送人"][type=1] })
+						this.tipList.push({ name: nodeName, type: ["","审核人","抄送人"][type] })
 					}
 					this.reErr(childNode)
 				} else if (type == 3) {

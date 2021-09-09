@@ -67,65 +67,12 @@
                     </span>
                 </el-dialog>
             </div>
-            <el-dialog title="选择成员" :visible.sync="conditionRoleVisible" width="600px" append-to-body class="promoter_person">
-                <div class="person_body clear">
-                    <div class="person_tree l">
-                        <input type="text" placeholder="搜索成员" v-model="conditionRoleSearchName" @input="getDebounceData($event,activeName)">
-                        <el-tabs v-model="activeName" @tab-click="handleClick">
-                            <el-tab-pane label="组织架构" name="1"></el-tab-pane>
-                            <el-tab-pane label="角色列表" name="2"></el-tab-pane>
-                        </el-tabs>
-                        <p class="ellipsis tree_nav" v-if="activeName==1&&!conditionRoleSearchName">
-                            <span @click="getDepartmentList(0)" class="ellipsis">天下</span>
-                            <span v-for="(item,index) in departments.titleDepartments" class="ellipsis" 
-                            :key="index+'a'" @click="getDepartmentList(item.id)">{{item.departmentName}}</span>   
-                        </p>
-                        <ul style="height: 360px;" v-if="activeName==1">
-                            <li v-for="(item,index) in departments.childDepartments" :key="index+'b'" class="check_box">
-                                <a :class="$func.toggleClass(conditionDepartmentList,item)&&'active'" @click="$func.toChecked(conditionDepartmentList,item)">
-                                    <img src="@/assets/images/icon_file.png">{{item.departmentName}}</a>
-                                <i @click="getDepartmentList(item.id)">下级</i>
-                            </li>
-                            <li v-for="(item,index) in departments.employees" :key="index+'c'" class="check_box">
-                                <a :class="$func.toggleClass(conditionEmployessList,item)&&'active'" @click="$func.toChecked(conditionEmployessList,item)" :title="item.departmentNames">
-                                    <img src="@/assets/images/icon_people.png">{{item.employeeName}}</a>
-                            </li>
-                        </ul>
-                        <ul style="height: 360px;" v-if="activeName==2">
-                            <li v-for="(item,index) in roles" :key="index+'c'" class="check_box">
-                                <a :class="$func.toggleClass(conditionRoleList,item,'roleId')&&'active'" @click="$func.toChecked(conditionRoleList,item,'roleId')" :title="item.description">
-                                    <img src="@/assets/images/icon_role.png">{{item.roleName}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="has_selected l">
-                        <p class="clear">已选（{{conditionDepartmentList.length+conditionEmployessList.length+conditionRoleList.length}}）
-                            <a @click="conditionDepartmentList=[];conditionEmployessList=[];conditionRoleList=[]">清空</a>
-                        </p>
-                        <ul>
-                            <li v-for="(item,index) in conditionRoleList" :key="index+'e'">
-                                <img src="@/assets/images/icon_role.png">
-                                <span>{{item.roleName}}</span>
-                                <img src="@/assets/images/cancel.png" @click="$func.removeEle(conditionRoleList,item,'roleId')">
-                            </li>
-                            <li v-for="(item,index) in conditionDepartmentList" :key="index+'e1'">
-                                <img src="@/assets/images/icon_file.png">
-                                <span>{{item.departmentName}}</span>
-                                <img src="@/assets/images/cancel.png" @click="$func.removeEle(conditionDepartmentList,item)">
-                            </li>
-                            <li v-for="(item,index) in conditionEmployessList" :key="index+'e2'">
-                                <img src="@/assets/images/icon_people.png">
-                                <span>{{item.employeeName}}</span>
-                                <img src="@/assets/images/cancel.png" @click="$func.removeEle(conditionEmployessList,item)">
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="conditionRoleVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="sureConditionRole">确 定</el-button>
-                </span>
-            </el-dialog>
+            <employees-role-dialog 
+                :visible.sync="conditionRoleVisible"
+                :data.sync="checkedList"
+                @change="sureConditionRole"
+                :isDepartment="true"
+            />
             <div class="demo-drawer__footer clear">
                 <el-button type="primary" @click="saveCondition">确 定</el-button>
                 <el-button @click="$store.commit('updateCondition',false)">取 消</el-button>
@@ -135,9 +82,11 @@
 </template>
 
 <script>
-import xins from './mixins'
+import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
 export default {
-    mixins: [ xins],
+    components:{
+        employeesRoleDialog
+    },
     data(){
         return {
             conditionVisible: false,
@@ -146,12 +95,9 @@ export default {
             },
             conditionConfig: {},
             PriorityLevel:"",
-            conditionRoleSearchName: "",
-            conditionDepartmentList: [],
-            conditionEmployessList: [],
-            conditionRoleList: [],
             conditions: [],
             conditionList: [],
+            checkedList: [],
             conditionRoleVisible: false,
         }
     },
@@ -286,59 +232,13 @@ export default {
             })
         },
         addConditionRole() {
-            this.conditionRoleSearchName = "";
             this.conditionRoleVisible = true;
-            this.activeName = "1";
-            this.getDepartmentList();
-            this.conditionDepartmentList = [];
-            this.conditionEmployessList = [];
-            this.conditionRoleList = [];
-            for (var i = 0; i < this.conditionConfig.nodeUserList.length; i++) {
-                var { type, name, targetId } = this.conditionConfig.nodeUserList[i];
-                if (type == 1) {
-                    this.conditionEmployessList.push({
-                        employeeName: name,
-                        id: targetId
-                    });
-                } else if (type == 2) {
-                    this.conditionRoleList.push({
-                        roleName: name,
-                        roleId: targetId
-                    });
-                } else if (type == 3) {
-                    this.conditionDepartmentList.push({
-                        departmentName: name,
-                        id: targetId
-                    });
-                }
-            }
+            this.checkedList = this.conditionConfig.nodeUserList
         },
-        sureConditionRole() {
-            this.conditionConfig.nodeUserList = [];
-            this.conditionRoleList.map(item => {
-                this.conditionConfig.nodeUserList.push({
-                    type: 2,
-                    targetId: item.roleId,
-                    name: item.roleName
-                })
-            });
-            this.conditionDepartmentList.map(item => {
-                this.conditionConfig.nodeUserList.push({
-                    type: 3,
-                    targetId: item.id,
-                    name: item.departmentName
-                })
-            });
-            this.conditionEmployessList.map(item => {
-                this.conditionConfig.nodeUserList.push({
-                    type: 1,
-                    targetId: item.id,
-                    name: item.employeeName
-                })
-            });
+        sureConditionRole(data) {
+            this.conditionConfig.nodeUserList = data;
             this.conditionRoleVisible = false;
         },
-        
     }
 }
 </script>
@@ -415,6 +315,7 @@ export default {
                     border-radius: 4px;
                     min-height: 32px;
                     border: 1px solid rgba(217, 217, 217, 1);
+                    word-break: break-word;
                 }
                 p.check_box {
                     line-height: 32px;

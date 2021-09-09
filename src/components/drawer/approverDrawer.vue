@@ -80,80 +80,24 @@
                 <el-button type="primary" @click="saveApprover">确 定</el-button>
                 <el-button @click="closeDrawer">取 消</el-button>
             </div>
-            <el-dialog title="选择成员" :visible.sync="approverVisible" width="600px" append-to-body class="promoter_person">
-                <div class="person_body clear">
-                    <div class="person_tree l">
-                        <input type="text" placeholder="搜索成员" v-model="approverSearchName" @input="getDebounceData($event)">
-                        <p class="ellipsis tree_nav" v-if="!approverSearchName">
-                            <span @click="getDepartmentList(0)" class="ellipsis">天下</span>
-                            <span v-for="(item,index) in departments.titleDepartments" class="ellipsis" 
-                            :key="index+'a'" @click="getDepartmentList(item.id)">{{item.departmentName}}</span>   
-                        </p>
-                        <ul>
-                            <li v-for="(item,index) in departments.childDepartments" :key="index+'b'" class="check_box not">
-                                <a><img src="@/assets/images/icon_file.png">{{item.departmentName}}</a>
-                                <i @click="getDepartmentList(item.id)">下级</i>
-                            </li>
-                            <li v-for="(item,index) in departments.employees" :key="index+'c'" class="check_box">
-                                <a :class="$func.toggleClass(approverEmplyessList,item)&&'active'" @click="$func.toChecked(approverEmplyessList,item)" :title="item.departmentNames">
-                                    <img src="@/assets/images/icon_people.png">{{item.employeeName}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="has_selected l">
-                        <p class="clear">已选（{{approverEmplyessList.length}}）
-                            <a @click="approverEmplyessList=[]">清空</a>
-                        </p>
-                        <ul>
-                            <li v-for="(item,index) in approverEmplyessList" :key="index+'e'">
-                                <img src="@/assets/images/icon_people.png">
-                                <span>{{item.employeeName}}</span>
-                                <img src="@/assets/images/cancel.png" @click="$func.removeEle(approverEmplyessList,item)">
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="approverVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="sureApprover">确 定</el-button>
-                </span>
-            </el-dialog>
-            <el-dialog title="选择角色" :visible.sync="approverRoleVisible" width="600px" append-to-body class="promoter_person">
-                <div class="person_body clear">
-                    <div class="person_tree l">
-                        <input type="text" placeholder="搜索角色" v-model="approverRoleSearchName" @input="getDebounceData($event,2)">
-                        <ul>
-                            <li v-for="(item,index) in roles" :key="index+'b'" class="check_box not"
-                                :class="$func.toggleClass(roleList,item,'roleId')&&'active'" @click="roleList=[item]">
-                                <a :title="item.description"><img src="@/assets/images/icon_role.png">{{item.roleName}}</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="has_selected l">
-                        <p class="clear">已选（{{roleList.length}}）
-                            <a @click="roleList=[]">清空</a>
-                        </p>
-                        <ul>
-                            <li v-for="(item,index) in roleList" :key="index+'e'">
-                                <img src="@/assets/images/icon_role.png">
-                                <span>{{item.roleName}}</span>
-                                <img src="@/assets/images/cancel.png" @click="$func.removeEle(roleList,item,'roleId')">
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="approverRoleVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="sureApprover">确 定</el-button>
-                </span>
-            </el-dialog>
+            <employees-dialog 
+                :visible.sync="approverVisible"
+                :data.sync="checkedList"
+                @change="sureApprover"
+            />
+            <role-dialog 
+                :visible.sync="approverRoleVisible"
+                :data.sync="checkedRoleList"
+                @change="sureRoleApprover"
+            />
         </div>
     </el-drawer>
 </template>
 <script>
-import mixins from './mixins'
+import employeesDialog from '../dialog/employeesDialog.vue'
+import roleDialog from '../dialog/roleDialog.vue'
 export default {
-    mixins: [ mixins],
+    components: { employeesDialog, roleDialog},
     props: ['directorMaxLevel'],
     data(){
         return {
@@ -161,9 +105,8 @@ export default {
             approverVisible: false,
             approverRoleVisible: false,
             approverEmplyessList: [],
-            approverSearchName: "",
-            approverRoleSearchName: "",
-            roleList: [],
+            checkedRoleList: [],
+            checkedList:[]
         }
     },
      computed:{
@@ -195,51 +138,19 @@ export default {
         },
         addApprover() {
             this.approverVisible = true;
-            this.approverSearchName = "";
-            this.getDepartmentList();
-            this.approverEmplyessList = [];
-            for (var i = 0; i < this.approverConfig.nodeUserList.length; i++) {
-                var { name, targetId } = this.approverConfig.nodeUserList[i];
-                this.approverEmplyessList.push({
-                    employeeName: name,
-                    id: targetId
-                });
-            }
+            this.checkedList = this.approverConfig.nodeUserList
         },
         addRoleApprover() {
             this.approverRoleVisible = true;
-            this.approverRoleSearchName = "";
-            this.getRoleList();
-            this.roleList = [];
-            for (var i = 0; i < this.approverConfig.nodeUserList.length; i++) {
-                var { name, targetId } = this.approverConfig.nodeUserList[i];
-                this.roleList.push({
-                    roleName: name,
-                    roleId: targetId
-                });
-            }
+            this.checkedRoleList = this.approverConfig.nodeUserList
         },
-        sureApprover() {
-            this.approverConfig.nodeUserList = [];
-            if (this.approverConfig.settype == 1 || (this.approverConfig.settype == 4 && this.approverConfig.selectRange == 2)) {
-                this.approverEmplyessList.map(item => {
-                    this.approverConfig.nodeUserList.push({
-                        type: 1,
-                        targetId: item.id,
-                        name: item.employeeName
-                    })
-                });
-                this.approverVisible = false;
-            } else if (this.approverConfig.settype == 4 && this.approverConfig.selectRange == 3) {
-                this.roleList.map(item => {
-                    this.approverConfig.nodeUserList.push({
-                        type: 2,
-                        targetId: item.roleId,
-                        name: item.roleName
-                    })
-                });
-                this.approverRoleVisible = false;
-            }
+        sureApprover(data) {
+            this.approverConfig.nodeUserList = data;
+            this.approverVisible = false;
+        },
+        sureRoleApprover(data){
+            this.approverConfig.nodeUserList = data;
+            this.approverRoleVisible = false;
         },
         saveApprover() {
             this.approverConfig.error = !this.$func.setApproverStr(this.approverConfig)
