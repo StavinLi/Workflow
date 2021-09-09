@@ -4,7 +4,7 @@
     "data": {
         "tableId": 1,
         "workFlowDef": {
-            "name": "合同审批",
+            "name": "合同审批"
         },
         "directorMaxLevel": 4,
         "flowPermission": [],
