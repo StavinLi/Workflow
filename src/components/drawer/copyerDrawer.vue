@@ -157,6 +157,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less">
+.set_copyer{
+    .copyer_content{
+        padding: 20px 20px 0;
+        .el-button{
+            margin-bottom: 20px;
+        }
+        .el-checkbox {
+            margin-bottom: 20px;
+        }
+    }
+}
 </style>

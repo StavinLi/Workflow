@@ -251,21 +251,8 @@ export default {
 .add-node-popover-body {
     display: flex;
 }
-.promoter_content {
-    padding: 0 20px;
-}
-.condition_content .el-button,
-.copyer_content .el-button,
-.approver_self_select .el-button,
-.promoter_content .el-button,
-.approver_content .el-button {
-    margin-bottom: 20px;
-}
-.promoter_content p {
-    padding: 18px 0;
-    font-size: 14px;
-    line-height: 20px;
-    color: #000000;
+.el-checkbox__label {
+    font-size: 12px;
 }
 .promoter_person .el-dialog__body {
     padding: 10px 20px 14px 20px;
@@ -367,59 +354,6 @@ export default {
     margin-top: 2px;
     width: 14px;
 }
-el-radio-group {
-    padding: 20px 0;
-}
-.approver_content {
-    padding-bottom: 10px;
-    border-bottom: 1px solid #f2f2f2;
-}
-.approver_content .el-radio,
-.approver_some .el-radio,
-.approver_self_select .el-radio {
-    width: 27%;
-    margin-bottom: 20px;
-}
-.copyer_content .el-checkbox {
-    margin-bottom: 20px;
-}
-.el-checkbox__label {
-    font-size: 12px;
-}
-.condition_content,
-.copyer_content,
-.approver_self_select,
-.approver_manager,
-.approver_content,
-.approver_some {
-    padding: 20px 20px 0;
-}
-.approver_manager p:first-of-type,
-.approver_some p {
-    line-height: 19px;
-    font-size: 14px;
-    margin-bottom: 14px;
-}
-
-.approver_manager p {
-    line-height: 32px;
-}
-.approver_manager select {
-    width: 420px;
-    height: 32px;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 4px;
-    border: 1px solid rgba(217, 217, 217, 1);
-}
-.approver_manager p.tip {
-    margin: 10px 0 22px 0;
-    font-size: 12px;
-    line-height: 16px;
-    color: #f8642d;
-}
-.approver_self {
-    padding: 28px 20px;
-}
 .selected_list {
     margin-bottom: 20px;
     line-height: 30px;
@@ -437,93 +371,5 @@ el-radio-group {
     width: 7px;
     height: 7px;
     cursor: pointer;
-}
-.approver_self_select h3 {
-    margin: 5px 0 20px;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 19px;
-}
-.condition_copyer .el-drawer__body .priority_level {
-    position: absolute;
-    top: 11px;
-    right: 30px;
-    width: 100px;
-    height: 32px;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 4px;
-    border: 1px solid rgba(217, 217, 217, 1);
-}
-.condition_content p.tip {
-    margin: 20px 0;
-    width: 510px;
-    text-indent: 17px;
-    line-height: 45px;
-    background: rgba(241, 249, 255, 1);
-    border: 1px solid rgba(64, 163, 247, 1);
-    color: #46a6fe;
-    font-size: 14px;
-}
-.condition_content ul {
-    max-height: 500px;
-    overflow-y: scroll;
-    margin-bottom: 20px;
-}
-.condition_content li > span {
-    float: left;
-    margin-right: 8px;
-    width: 70px;
-    line-height: 32px;
-    text-align: right;
-}
-.condition_content li > div {
-    display: inline-block;
-    width: 370px;
-}
-.condition_content li:not(:last-child) > div > p {
-    margin-bottom: 20px;
-}
-.condition_content li > div > p:not(:last-child) {
-    margin-bottom: 10px;
-}
-.condition_content li > a {
-    float: right;
-    margin-right: 10px;
-    margin-top: 7px;
-}
-.condition_content li select,
-.condition_content li input {
-    width: 100%;
-    height: 32px;
-    background: rgba(255, 255, 255, 1);
-    border-radius: 4px;
-    border: 1px solid rgba(217, 217, 217, 1);
-}
-.condition_content li select + input {
-    width: 260px;
-}
-.condition_content li select {
-    margin-right: 10px;
-    width: 100px;
-}
-.condition_content li p.selected_list {
-    padding-left: 10px;
-    border-radius: 4px;
-    min-height: 32px;
-    border: 1px solid rgba(217, 217, 217, 1);
-}
-.condition_content li p.check_box {
-    line-height: 32px;
-}
-.condition_list .el-dialog__body {
-    padding: 16px 26px;
-}
-.condition_list p {
-    color: #666666;
-    margin-bottom: 10px;
-}
-.condition_list p.check_box {
-    margin-bottom: 0;
-    line-height: 36px;
 }
 </style>

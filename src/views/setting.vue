@@ -64,10 +64,10 @@
 	</div>
 </template>
 <script>
-import promoterDrawer from '../../components/promoterDrawer'
-import approverDrawer from '../../components/approverDrawer'
-import copyerDrawer from '../../components/copyerDrawer'
-import conditionDrawer from '../../components/conditionDrawer'
+import promoterDrawer from '@/components/drawer/promoterDrawer'
+import approverDrawer from '@/components/drawer/approverDrawer'
+import copyerDrawer from '@/components/drawer/copyerDrawer'
+import conditionDrawer from '@/components/drawer/conditionDrawer'
 export default {
 	components:{promoterDrawer,approverDrawer,copyerDrawer,conditionDrawer},
 	data() {
@@ -87,44 +87,41 @@ export default {
 	created() {
 		this.$axios.get(`${process.env.BASE_URL}data.json`, {
 			workFlowDefId: this.$route.params.workFlowDefId
-		}).then(res => {			
-			this.processConfig = res.data;
-			this.nodeConfig = this.processConfig.nodeConfig;
-			this.flowPermission = this.processConfig.flowPermission;
-			this.directorMaxLevel = this.processConfig.directorMaxLevel;
-			this.workFlowDef = this.processConfig.workFlowDef
-			this.tableId = this.processConfig.tableId
+		}).then(({data}) => {			
+			this.processConfig = data;
+			let {nodeConfig,flowPermission,directorMaxLevel,workFlowDef,tableId} = data
+			this.nodeConfig = nodeConfig;
+			this.flowPermission = flowPermission;
+			this.directorMaxLevel = directorMaxLevel;
+			this.workFlowDef = workFlowDef
+			this.tableId = tableId
 		})
 	},
 	methods: {
 		toReturn() {
 			//window.location.href = ""
 		},
-		reErr(data) {
-			if (data.childNode) {
-				if (data.childNode.type == 1) {//审批人
-					if (data.childNode.error) {
-						this.tipList.push({ name: data.childNode.nodeName, type: "审核人" })
+		reErr({childNode}) {
+			if (childNode) {
+				let {type,error,nodeName,conditionNodes} = childNode
+				if (type == 1 || type == 2) {
+					if (error) {
+						this.tipList.push({ name: nodeName, type: ["审核人","抄送人"][type=1] })
 					}
-					this.reErr(data.childNode)
-				} else if (data.childNode.type == 2) {
-					if (data.childNode.error) {
-						this.tipList.push({ name: data.childNode.nodeName, type: "抄送人" })
-					}
-					this.reErr(data.childNode)
-				} else if (data.childNode.type == 3) {
-					this.reErr(data.childNode.childNode)
-				} else if (data.childNode.type == 4) {
-					this.reErr(data.childNode)
-					for (var i = 0; i < data.childNode.conditionNodes.length; i++) {
-						if (data.childNode.conditionNodes[i].error) {
-							this.tipList.push({ name: data.childNode.conditionNodes[i].nodeName, type: "条件" })
+					this.reErr(childNode)
+				} else if (type == 3) {
+					this.reErr(childNode)
+				} else if (type == 4) {
+					this.reErr(childNode)
+					for (var i = 0; i < conditionNodes.length; i++) {
+						if (conditionNodes[i].error) {
+							this.tipList.push({ name: conditionNodes[i].nodeName, type: "条件" })
 						}
-						this.reErr(data.childNode.conditionNodes[i])
+						this.reErr(conditionNodes[i])
 					}
 				}
 			} else {
-				data.childNode = null
+				childNode = null
 			}
 		},
 		saveSet() {
@@ -163,7 +160,7 @@ export default {
 };
 </script>
 <style>
-@import "../../css/workflow.css";
+@import "../css/workflow.css";
 .error-modal-list {
 	width: 455px;
 }

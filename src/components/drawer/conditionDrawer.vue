@@ -343,6 +343,100 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="less">
+.condition_copyer{
+    .el-drawer__body {
+        .priority_level {
+            position: absolute;
+            top: 11px;
+            right: 30px;
+            width: 100px;
+            height: 32px;
+            background: rgba(255, 255, 255, 1);
+            border-radius: 4px;
+            border: 1px solid rgba(217, 217, 217, 1);
+        }
+    }
+    .condition_content{
+        padding: 20px 20px 0;
+        p.tip {
+            margin: 20px 0;
+            width: 510px;
+            text-indent: 17px;
+            line-height: 45px;
+            background: rgba(241, 249, 255, 1);
+            border: 1px solid rgba(64, 163, 247, 1);
+            color: #46a6fe;
+            font-size: 14px;
+        }
+        ul {
+            max-height: 500px;
+            overflow-y: scroll;
+            margin-bottom: 20px;
+            li{
+                & > span {
+                    float: left;
+                    margin-right: 8px;
+                    width: 70px;
+                    line-height: 32px;
+                    text-align: right;
+                }
+                & > div {
+                    display: inline-block;
+                    width: 370px;
+                    & > p:not(:last-child) {
+                        margin-bottom: 10px;
+                    }
+                }
+                &:not(:last-child) > div > p {
+                    margin-bottom: 20px;
+                }
+                & > a {
+                    float: right;
+                    margin-right: 10px;
+                    margin-top: 7px;
+                }
+                select, input {
+                    width: 100%;
+                    height: 32px;
+                    background: rgba(255, 255, 255, 1);
+                    border-radius: 4px;
+                    border: 1px solid rgba(217, 217, 217, 1);
+                }
+                select + input {
+                    width: 260px;
+                }
+                select {
+                    margin-right: 10px;
+                    width: 100px;
+                }
+                p.selected_list {
+                    padding-left: 10px;
+                    border-radius: 4px;
+                    min-height: 32px;
+                    border: 1px solid rgba(217, 217, 217, 1);
+                }
+                p.check_box {
+                    line-height: 32px;
+                }
+            }
+        }
+        .el-button{
+            margin-bottom: 20px;
+        }
+    }
+}
+.condition_list{
+    .el-dialog__body {
+        padding: 16px 26px;
+    }
+    p {
+        color: #666666;
+        margin-bottom: 10px;
+        & > .check_box {
+            margin-bottom: 0;
+            line-height: 36px;
+        }
+    }
+}
 </style>

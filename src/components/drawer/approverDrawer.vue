@@ -257,3 +257,58 @@ export default {
     }
 }
 </script>
+<style lang="less">
+.set_promoter{
+    .approver_content {
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f2f2f2;
+    }
+    .approver_self_select .el-button,
+    .approver_content .el-button {
+        margin-bottom: 20px;
+    }
+    .approver_content .el-radio,
+    .approver_some .el-radio,
+    .approver_self_select .el-radio {
+        width: 27%;
+        margin-bottom: 20px;
+    }
+    .approver_manager p {
+        line-height: 32px;
+    }
+    .approver_manager select {
+        width: 420px;
+        height: 32px;
+        background: rgba(255, 255, 255, 1);
+        border-radius: 4px;
+        border: 1px solid rgba(217, 217, 217, 1);
+    }
+    .approver_manager p.tip {
+        margin: 10px 0 22px 0;
+        font-size: 12px;
+        line-height: 16px;
+        color: #f8642d;
+    }
+    .approver_self {
+        padding: 28px 20px;
+    }
+    .approver_self_select,
+    .approver_manager,
+    .approver_content,
+    .approver_some {
+        padding: 20px 20px 0;
+    }
+    .approver_manager p:first-of-type,
+    .approver_some p {
+        line-height: 19px;
+        font-size: 14px;
+        margin-bottom: 14px;
+    }
+    .approver_self_select h3 {
+        margin: 5px 0 20px;
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 19px;
+    }
+}
+</style>

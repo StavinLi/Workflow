@@ -6,12 +6,8 @@ Vue.use(Router)
 export default new Router({
     routes: [{
         path: '/',
-        redirect: '/approval/setting'
-    }, {
-        path: '/approval/setting',
-        name: 'approval',
         component: (resolve) => {
-            require([`@/views/approval/setting`], resolve)
+            require([`@/views/setting`], resolve)
         }
     }]
 })

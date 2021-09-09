@@ -133,3 +133,19 @@ export default {
     }
 }
 </script>
+<style lang="less">
+.set_promoter{
+    .promoter_content {
+        padding: 0 20px;
+        .el-button{
+            margin-bottom: 20px;
+        }
+        p {
+            padding: 18px 0;
+            font-size: 14px;
+            line-height: 20px;
+            color: #000000;
+        }
+    }
+}
+</style>
