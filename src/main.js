@@ -8,10 +8,8 @@ import './plugins/element.js'
 import './css/override-element-ui.css'
 import func from './plugins/preload.js'
 import nodeWrap from '@/components/nodeWrap'
-Vue.use(nodeWrap)
 Vue.component('nodeWrap', nodeWrap); //初始化组件
 import addNode from '@/components/addNode'
-Vue.use(addNode)
 Vue.component('addNode', addNode); //初始化组件
 Vue.prototype.$func = func;
 Vue.config.productionTip = false;
