@@ -1,5 +1,5 @@
 <template>
-    <el-drawer :append-to-body="true" title="审批人设置" :visible.sync="$store.state.approverDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="saveApprover"> 
+    <el-drawer :append-to-body="true" title="审批人设置" :visible.sync="approverDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="saveApprover"> 
         <div class="demo-drawer__content">
             <div class="drawer_content">
                 <div class="approver_content">
@@ -96,6 +96,7 @@
 <script>
 import employeesDialog from '../dialog/employeesDialog.vue'
 import roleDialog from '../dialog/roleDialog.vue'
+import {mapState, mapMutations} from '_vuex@3.6.2@vuex'
 export default {
     components: { employeesDialog, roleDialog},
     props: ['directorMaxLevel'],
@@ -110,16 +111,15 @@ export default {
         }
     },
      computed:{
-        approverConfig1(){
-            return this.$store.state.approverConfig.value
-        }
+        ...mapState(['approverConfig1','approverDrawer']),
     },
     watch:{
         approverConfig1(val){
-            this.approverConfig = val;
+            this.approverConfig = val.value;
         }
     },
     methods:{
+        ...mapMutations(['setApproverConfig','setApprover']),
         changeRange() {
             this.approverConfig.nodeUserList = [];
         },
@@ -154,16 +154,16 @@ export default {
         },
         saveApprover() {
             this.approverConfig.error = !this.$func.setApproverStr(this.approverConfig)
-            this.$store.commit('updateApproverConfig',{
+            this.setApproverConfig({
                 value:this.approverConfig,
                 flag:true,
-                id:this.$store.state.approverConfig.id
+                id:this.approverConfig1.id
             })
             this.$emit("update:nodeConfig", this.approverConfig);
             this.closeDrawer()
         },
         closeDrawer(){
-            this.$store.commit('updateApprover',false)
+            this.setApprover(false)
         }
     }
 }

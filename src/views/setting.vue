@@ -27,8 +27,7 @@
 					<div :class="'zoom-in'+ (nowVal==300?' disabled':'')" @click="zoomSize(2)"></div>
 				</div>
 				<div class="box-scale" id="box-scale" :style="'transform: scale('+nowVal/100+'); transform-origin: 50% 0px 0px;'">
-					<nodeWrap :nodeConfig.sync="nodeConfig" :flowPermission.sync="flowPermission"
-						:isTried.sync="isTried" :tableId="tableId"></nodeWrap>
+					<nodeWrap :nodeConfig.sync="nodeConfig" :flowPermission.sync="flowPermission"></nodeWrap>
 					<div class="end-node">
 						<div class="end-node-circle"></div>
 						<div class="end-node-text">流程结束</div>
@@ -52,6 +51,7 @@ import promoterDrawer from '@/components/drawer/promoterDrawer'
 import approverDrawer from '@/components/drawer/approverDrawer'
 import copyerDrawer from '@/components/drawer/copyerDrawer'
 import conditionDrawer from '@/components/drawer/conditionDrawer'
+import { mapMutations } from '_vuex@3.6.2@vuex'
 export default {
 	components:{
 		errorDialog,
@@ -62,7 +62,6 @@ export default {
 	},
 	data() {
 		return {
-			isTried: false,
 			tipList: [],
 			tipVisible: false,
 			nowVal: 100,
@@ -71,7 +70,6 @@ export default {
 			workFlowDef: {},
 			flowPermission: [],
 			directorMaxLevel: 0,
-			tableId: "",
 		};
 	},
 	created() {
@@ -84,10 +82,11 @@ export default {
 			this.flowPermission = flowPermission;
 			this.directorMaxLevel = directorMaxLevel;
 			this.workFlowDef = workFlowDef
-			this.tableId = tableId
+			this.setTableId(tableId)
 		})
 	},
 	methods: {
+		...mapMutations(['setTableId','setIsTried']),
 		toReturn() {
 			//window.location.href = ""
 		},
@@ -115,7 +114,7 @@ export default {
 			}
 		},
 		saveSet() {
-			this.isTried = true;
+			this.setIsTried(true)
 			this.tipList = [];
 			this.reErr(this.nodeConfig);
 			if (this.tipList.length != 0) {

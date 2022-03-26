@@ -1,5 +1,5 @@
 <template>
-    <el-drawer :append-to-body="true" title="抄送人设置" :visible.sync="$store.state.copyerDrawer" direction="rtl" class="set_copyer" size="550px" :before-close="saveCopyer"> 
+    <el-drawer :append-to-body="true" title="抄送人设置" :visible.sync="copyerDrawer" direction="rtl" class="set_copyer" size="550px" :before-close="saveCopyer"> 
         <div class="demo-drawer__content">
             <div class="copyer_content drawer_content">
                 <el-button type="primary" @click="addCopyer">添加成员</el-button>
@@ -27,6 +27,7 @@
 </template>
 <script>
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
+import {mapState, mapMutations} from '_vuex@3.6.2@vuex'
 export default {
     components:{
         employeesRoleDialog
@@ -40,17 +41,16 @@ export default {
         }
     },
     computed:{
-        copyerConfig1(){
-            return this.$store.state.copyerConfig.value
-        }
+        ...mapState(['copyerDrawer','copyerConfig1']),
     },
     watch:{
         copyerConfig1(val){
-            this.copyerConfig = val;
+            this.copyerConfig = val.value;
             this.ccSelfSelectFlag = this.copyerConfig.ccSelfSelectFlag == 0 ? [] : [this.copyerConfig.ccSelfSelectFlag]
         }
     },
     methods:{
+        ...mapMutations(['setCopyerConfig','setCopyer']),
         addCopyer() {
             this.copyerVisible = true;
             this.checkedList = this.copyerConfig.nodeUserList
@@ -62,15 +62,15 @@ export default {
         saveCopyer() {
             this.copyerConfig.ccSelfSelectFlag = this.ccSelfSelectFlag.length == 0 ? 0 : 1;
             this.copyerConfig.error = !this.$func.copyerStr(this.copyerConfig);
-            this.$store.commit('updateCopyerConfig',{
+            this.setCopyerConfig({
                 value:this.copyerConfig,
                 flag:true,
-                id:this.$store.state.copyerConfig.id
+                id:this.copyerConfig1.id
             })
             this.closeDrawer();
         },
         closeDrawer(){
-            this.$store.commit('updateCopyer',false)
+            this.setCopyer(false)
         },     
     }
 }

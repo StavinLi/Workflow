@@ -58,8 +58,7 @@
                                 <addNode :childNodeP.sync="item.childNode"></addNode>
                             </div>
                         </div>
-                        <nodeWrap v-if="item.childNode && item.childNode" :nodeConfig.sync="item.childNode" :tableId="tableId"
-                        :isTried.sync="isTried"></nodeWrap>
+                        <nodeWrap v-if="item.childNode" :nodeConfig.sync="item.childNode"></nodeWrap>
                         <div class="top-left-cover-line" v-if="index==0"></div>
                         <div class="bottom-left-cover-line" v-if="index==0"></div>
                         <div class="top-right-cover-line" v-if="index==nodeConfig.conditionNodes.length-1"></div>
@@ -69,13 +68,13 @@
                 <addNode :childNodeP.sync="nodeConfig.childNode"></addNode>
             </div>
         </div>
-        <nodeWrap v-if="nodeConfig.childNode && nodeConfig.childNode" :nodeConfig.sync="nodeConfig.childNode" :tableId="tableId"
-        :isTried.sync="isTried"></nodeWrap>
+        <nodeWrap v-if="nodeConfig.childNode" :nodeConfig.sync="nodeConfig.childNode"></nodeWrap>
     </div>
 </template>
 <script>
+import { mapState, mapMutations} from '_vuex@3.6.2@vuex'
 export default {
-    props: ["nodeConfig", "flowPermission", "isTried", "tableId"],
+    props: ["nodeConfig", "flowPermission"],
     data() {
         return {
             placeholderList: ["发起人", "审核人", "抄送人"],
@@ -95,18 +94,7 @@ export default {
         }
     },
     computed: {
-        flowPermission1() {
-            return this.$store.state.flowPermission
-        },
-        approverConfig1() {
-            return this.$store.state.approverConfig
-        },
-        copyerConfig1() {
-            return this.$store.state.copyerConfig
-        },
-        conditionsConfig1() {
-            return this.$store.state.conditionsConfig
-        },
+        ...mapState(['isTried','flowPermission1','approverConfig1','copyerConfig1','conditionsConfig1']),
     },
     watch: {
         flowPermission1(data) {
@@ -131,6 +119,16 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            'setPromoter',
+            'setApprover',
+            'setCopyer',
+            'setCondition',
+            'setFlowPermission',
+            'setApproverConfig',
+            'setCopyerConfig',
+            'setConditionsConfig'
+        ]),
         clickEvent(index) {
             if (index || index === 0) {
                 this.$set(this.isInputList, index, true)
@@ -196,30 +194,30 @@ export default {
         setPerson(priorityLevel) {
             var { type } = this.nodeConfig;
             if (type == 0) {
-                this.$store.commit('updatePromoter',true)
-                this.$store.commit('updateFlowPermission',{
+                this.setPromoter(true)
+                this.setFlowPermission({
                     value:this.flowPermission,
                     flag:false,
                     id:this._uid
                 })
             } else if (type == 1) {
-                this.$store.commit('updateApprover',true)
-                this.$store.commit('updateApproverConfig',{
+                this.setApprover(true)
+                this.setApproverConfig({
                     value: {...JSON.parse(JSON.stringify(this.nodeConfig)),
                     ...{settype:this.nodeConfig.settype ? this.nodeConfig.settype : 1}},
                     flag:false,
                     id:this._uid
                 })
             } else if (type == 2) {
-                this.$store.commit('updateCopyer',true)
-                this.$store.commit('updateCopyerConfig',{
+                this.setCopyer(true)
+                this.setCopyerConfig({
                     value:JSON.parse(JSON.stringify(this.nodeConfig)),
                     flag:false,
                     id:this._uid
                 })
             } else {
-                this.$store.commit('updateCondition',true)
-                this.$store.commit('updateConditionsConfig',{
+                this.setCondition(true)
+                this.setConditionsConfig({
                     value:JSON.parse(JSON.stringify(this.nodeConfig)),
                     priorityLevel,
                     flag:false,

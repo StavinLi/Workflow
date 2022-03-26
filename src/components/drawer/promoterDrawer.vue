@@ -1,5 +1,5 @@
 <template>
-    <el-drawer :append-to-body="true" title="发起人" :visible.sync="$store.state.promoterDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="savePromoter"> 
+    <el-drawer :append-to-body="true" title="发起人" :visible.sync="promoterDrawer" direction="rtl" class="set_promoter" size="550px" :before-close="savePromoter"> 
         <div class="demo-drawer__content">
             <div class="promoter_content drawer_content">
                 <p>{{$func.arrToStr(flowPermission)?$func.arrToStr(flowPermission):'所有人'}}</p>
@@ -20,6 +20,7 @@
 </template>
 <script>
 import employeesDialog from '../dialog/employeesDialog.vue'
+import {mapState, mapMutations} from '_vuex@3.6.2@vuex'
 export default {
   components: { employeesDialog },
     data(){
@@ -30,16 +31,15 @@ export default {
         }
     },
     computed:{
-        flowPermission1(){
-            return this.$store.state.flowPermission.value
-        }
+        ...mapState(['promoterDrawer','flowPermission1']),
     },
     watch:{
         flowPermission1(val){
-            this.flowPermission = val
+            this.flowPermission = val.value
         }
     },
     methods:{
+        ...mapMutations(['setPromoter','setFlowPermission']),
         addPromoter() {
             this.checkedList = this.flowPermission
             this.promoterVisible = true;
@@ -49,15 +49,15 @@ export default {
             this.promoterVisible = false;
         },
         savePromoter() {
-            this.$store.commit('updateFlowPermission',{
+            this.setFlowPermission({
                 value:this.flowPermission,
                 flag:true,
-                id:this.$store.state.flowPermission.id
+                id:this.flowPermission1.id
             })
             this.closeDrawer()
         },
         closeDrawer(){
-            this.$store.commit('updatePromoter',false)
+            this.setPromoter(false)
         }
     }
 }
