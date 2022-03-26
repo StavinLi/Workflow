@@ -41,6 +41,25 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.ant-confirm-body .ant-confirm-title {
+    color: rgba(0, 0, 0, .85);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.4;
+    display: block;
+    overflow: hidden
+}
 
+.ant-confirm-body .ant-confirm-content {
+    margin-left: 38px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .65);
+    margin-top: 8px
+}
+.ant-confirm-body>.anticon {
+    font-size: 22px;
+    margin-right: 16px;
+    float: left
+}
 </style>

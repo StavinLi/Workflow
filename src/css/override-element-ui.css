@@ -104,9 +104,6 @@
 .el-radio__label, .el-checkbox__label {
     font-size: 12px;
 }
-.add-node-popover-body {
-    display: flex;
-}
 .my-el-custom-spinner {
     display: inline-block;
     width: 80px;
