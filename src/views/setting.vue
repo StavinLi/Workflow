@@ -51,7 +51,7 @@ import promoterDrawer from '@/components/drawer/promoterDrawer'
 import approverDrawer from '@/components/drawer/approverDrawer'
 import copyerDrawer from '@/components/drawer/copyerDrawer'
 import conditionDrawer from '@/components/drawer/conditionDrawer'
-import { mapMutations } from '_vuex@3.6.2@vuex'
+import { mapMutations } from 'vuex'
 export default {
 	components:{
 		errorDialog,

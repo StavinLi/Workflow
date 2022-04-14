@@ -96,7 +96,7 @@
 <script>
 import employeesDialog from '../dialog/employeesDialog.vue'
 import roleDialog from '../dialog/roleDialog.vue'
-import {mapState, mapMutations} from '_vuex@3.6.2@vuex'
+import {mapState, mapMutations} from 'vuex'
 export default {
     components: { employeesDialog, roleDialog},
     props: ['directorMaxLevel'],

@@ -27,7 +27,7 @@
 </template>
 <script>
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
-import {mapState, mapMutations} from '_vuex@3.6.2@vuex'
+import {mapState, mapMutations} from 'vuex'
 export default {
     components:{
         employeesRoleDialog

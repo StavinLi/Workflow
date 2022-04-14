@@ -72,7 +72,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapMutations} from '_vuex@3.6.2@vuex'
+import { mapState, mapMutations} from 'vuex'
 export default {
     props: ["nodeConfig", "flowPermission"],
     data() {
