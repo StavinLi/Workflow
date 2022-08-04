@@ -5,7 +5,7 @@
 workflow钉钉审批流程设置，基于vue开发。QQ交流群：639251756
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20191116144905578.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L20wXzM3Mjg1MTkz,size_16,color_FFFFFF,t_70 )
 -  [线上开源地址 https://github.com/StavinLi/Workflow](https://github.com/StavinLi/Workflow) github点个星吧！
--  [预览地址 https://stavinli.github.io/Workflow/#/](https://stavinli.github.io/Workflow/#/) 
+-  [预览地址 https://stavinli.github.io/Workflow/dist/index.html#/](https://stavinli.github.io/Workflow/dist/index.html#/) 
 -------------------
  
 
