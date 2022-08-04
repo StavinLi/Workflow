@@ -83,6 +83,7 @@
 
 <script>
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
+import { getConditions } from '@/plugins/api.js'
 export default {
     components:{
         employeesRoleDialog
@@ -145,22 +146,21 @@ export default {
             a.splice(includesIndex, 1);
             item.zdy1 = a.toString()
         }, 
-        addCondition() {
+        async addCondition() {
             this.conditionList = [];
             this.conditionVisible = true;
-            this.$axios.get(`${process.env.BASE_URL}conditions.json?tableId=${this.tableId}`).then(res => {
-                this.conditions = res.data;
-                if (this.conditionConfig.conditionList) {
-                    for (var i = 0; i < this.conditionConfig.conditionList.length; i++) {
-                        var { columnId } = this.conditionConfig.conditionList[i]
-                        if (columnId == 0) {
-                            this.conditionList.push({ columnId: 0 })
-                        } else {
-                            this.conditionList.push(this.conditions.filter(item => { return item.columnId == columnId; })[0])
-                        }
+            let { data }  = await getConditions({tableId: this.tableId})
+            this.conditions = data;
+            if (this.conditionConfig.conditionList) {
+                for (var i = 0; i < this.conditionConfig.conditionList.length; i++) {
+                    var { columnId } = this.conditionConfig.conditionList[i]
+                    if (columnId == 0) {
+                        this.conditionList.push({ columnId: 0 })
+                    } else {
+                        this.conditionList.push(this.conditions.filter(item => { return item.columnId == columnId; })[0])
                     }
                 }
-            })
+            }
         },
         sureCondition() {
             //1.弹窗有，外面无+

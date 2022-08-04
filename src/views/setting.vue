@@ -52,6 +52,7 @@ import promoterDrawer from '@/components/drawer/promoterDrawer'
 import approverDrawer from '@/components/drawer/approverDrawer'
 import copyerDrawer from '@/components/drawer/copyerDrawer'
 import conditionDrawer from '@/components/drawer/conditionDrawer'
+import { getWorkFlowData, setWorkFlowData } from '@/plugins/api.js'
 export default {
 	components:{
 		errorDialog,
@@ -75,9 +76,7 @@ export default {
 		};
 	},
 	created() {
-		this.$axios.get(`${process.env.BASE_URL}data.json`, {
-			workFlowDefId: this.$route.params.workFlowDefId
-		}).then(({data}) => {			
+		getWorkFlowData({workFlowDefId: this.$route.params.workFlowDefId}).then(({data}) => {			
 			this.processConfig = data;
 			let {nodeConfig,flowPermission,directorMaxLevel,workFlowDef,tableId} = data
 			this.nodeConfig = nodeConfig;
@@ -114,7 +113,7 @@ export default {
 				childNode = null
 			}
 		},
-		saveSet() {
+		async saveSet() {
 			this.isTried = true;
 			this.tipList = [];
 			this.reErr(this.nodeConfig);
@@ -123,15 +122,15 @@ export default {
 				return;
 			}
 			this.processConfig.flowPermission = this.flowPermission
+			// eslint-disable-next-line no-console
 			console.log(JSON.stringify(this.processConfig))
-			// this.$axios.post("", this.processConfig).then(res => {
-			//     if (res.code == 200) {
-			//         this.$message.success("设置成功");
-			//         setTimeout(function () {
-			//             window.location.href = ""
-			//         }, 200)
-			//     }
-			// })
+			let res = await setWorkFlowData(this.processConfig)
+			if (res.code == 200) {
+					this.$message.success("设置成功");
+					setTimeout(function () {
+							window.location.href = ""
+					}, 200)
+			}
 		},
 		zoomSize(type) {
 			if (type == 1) {

@@ -1,5 +1,6 @@
+import { getRoles, getDepartments, getEmployees } from '@/plugins/api.js'
 export default {
-  data(){
+  data() {
     return {
       visibleDialog: false,
       searchVal: "",
@@ -8,33 +9,34 @@ export default {
       roles: [],
     }
   },
-  methods:{
-    getRoleList() {
-      this.$axios.get(`${process.env.BASE_URL}roles.json`).then(res => {
-          this.roles = res.data.list;
-      })
+  methods: {
+    async getRoleList() {
+      let { data: { list } } = await getRoles()
+      this.roles = list;
     },
-    getDepartmentList(parentId = 0) {
-        this.$axios.get(`${process.env.BASE_URL}departments.json?parentId=${parentId}`).then(res => {
-            this.departments = res.data;
-        })
+    async getDepartmentList(parentId = 0) {
+      let { data } = await getDepartments({ parentId })
+      this.departments = data;
     },
     getDebounceData(event, type = 1) {
-      this.$func.debounce(function () {
-          if (event.target.value) {
-              if (type == 1) {
-                  this.departments.childDepartments = [];
-                  this.$axios.get(`${process.env.BASE_URL}employees.json?searchName=${event.target.value}&pageNum=1&pageSize=30`).then(res => {
-                      this.departments.employees = res.data.list
-                  })
-              } else {
-                  this.$axios.get(`${process.env.BASE_URL}roles.json?searchName=${event.target.value}&pageNum=1&pageSize=30`).then(res => {
-                      this.roles = res.data.list
-                  })
-              }
-          } else {
-              type == 1 ? this.getDepartmentList() : this.getRoleList();
+      this.$func.debounce(async function () {
+        if (event.target.value) {
+          let data = {
+            searchName: event.target.value,
+            pageNum: 1,
+            pageSize: 30
           }
+          if (type == 1) {
+            this.departments.childDepartments = [];
+            let res = await getEmployees(data)
+            this.departments.employees = res.data.list
+          } else {
+            let res = await getRoles(data)
+            this.roles = res.data.list
+          }
+        } else {
+          type == 1 ? await this.getDepartmentList() : await this.getRoleList();
+        }
       }.bind(this))()
     },
   }
