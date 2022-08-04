@@ -4,41 +4,49 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        tableId: '',
+        isTried: false,
         promoterDrawer: false,
-        flowPermission: [],
+        flowPermission1: {},
         approverDrawer: false,
-        approverConfig:{},
+        approverConfig1: {},
         copyerDrawer: false,
-        copyerConfig:{},
+        copyerConfig1: {},
         conditionDrawer: false,
-        conditionsConfig:{
+        conditionsConfig1: {
             conditionNodes: [],
         },
     },
     mutations: {
-        updatePromoter(status,promoterDrawer){
-            status.promoterDrawer = promoterDrawer
+        setTableId(status, payload) {
+            status.tableId = payload
         },
-        updateFlowPermission(status,flowPermission){
-            status.flowPermission = flowPermission
+        setIsTried(status, payload) {
+            status.isTried = payload
         },
-        updateApprover(status,approverDrawer){
-            status.approverDrawer = approverDrawer
+        setPromoter(status, payload) {
+            status.promoterDrawer = payload
         },
-        updateApproverConfig(status,approverConfig){
-            status.approverConfig = approverConfig
+        setFlowPermission(status, payload) {
+            status.flowPermission1 = payload
         },
-        updateCopyer(status,copyerDrawer){
-            status.copyerDrawer = copyerDrawer
+        setApprover(status, payload) {
+            status.approverDrawer = payload
         },
-        updateCopyerConfig(status,copyerConfig){
-            status.copyerConfig = copyerConfig
+        setApproverConfig(status, payload) {
+            status.approverConfig1 = payload
         },
-        updateCondition(status,conditionDrawer){
-            status.conditionDrawer = conditionDrawer
+        setCopyer(status, payload) {
+            status.copyerDrawer = payload
         },
-        updateConditionsConfig(status,conditionsConfig){
-            status.conditionsConfig = conditionsConfig
+        setCopyerConfig(status, payload) {
+            status.copyerConfig1 = payload
+        },
+        setCondition(status, payload) {
+            status.conditionDrawer = payload
+        },
+        setConditionsConfig(status, payload) {
+            status.conditionsConfig1 = payload
         },
     },
     actions: {}

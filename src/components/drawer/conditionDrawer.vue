@@ -1,5 +1,5 @@
 <template>
-    <el-drawer :append-to-body="true" title="条件设置" :visible.sync="$store.state.conditionDrawer" direction="rtl" class="condition_copyer" size="550px" :before-close="saveCondition"> 
+    <el-drawer :append-to-body="true" title="条件设置" :visible.sync="conditionDrawer" direction="rtl" class="condition_copyer" size="550px" :before-close="saveCondition"> 
         <select v-model="conditionConfig.priorityLevel" class="priority_level">
             <option v-for="item in conditionsConfig.conditionNodes.length" :value="item" :key="item">优先级{{item}}</option>
         </select>
@@ -75,13 +75,14 @@
             />
             <div class="demo-drawer__footer clear">
                 <el-button type="primary" @click="saveCondition">确 定</el-button>
-                <el-button @click="$store.commit('updateCondition',false)">取 消</el-button>
+                <el-button @click="setCondition(false)">取 消</el-button>
             </div>
         </div>
     </el-drawer>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
 import { getConditions } from '@/plugins/api.js'
 export default {
@@ -103,9 +104,7 @@ export default {
         }
     },
     computed:{
-        conditionsConfig1(){
-            return this.$store.state.conditionsConfig
-        },
+        ...mapState(['tableId','conditionsConfig1','conditionDrawer']),
     },
     watch:{
         conditionsConfig1(val){
@@ -117,6 +116,7 @@ export default {
         },
     },
     methods:{
+        ...mapMutations(['setCondition','setConditionsConfig']),
         changeOptType(item) {
             if (item.optType == 1) {
                 item.zdy1 = 2;
@@ -206,7 +206,7 @@ export default {
                     }
                 }
             }
-            ////3.弹窗无，外面有-
+            //3.弹窗无，外面有-
             for (let i = this.conditionConfig.conditionList.length - 1; i >= 0; i--) {
                 if (!this.$func.toggleClass(this.conditionList, this.conditionConfig.conditionList[i], "columnId")) {
                     this.conditionConfig.conditionList.splice(i, 1);
@@ -216,7 +216,7 @@ export default {
             this.conditionVisible = false;
         },
         saveCondition() {
-            this.$store.commit('updateCondition',false)
+            this.setCondition(false)
             var a = this.conditionsConfig.conditionNodes.splice(this.PriorityLevel - 1, 1)//截取旧下标
             this.conditionsConfig.conditionNodes.splice(this.conditionConfig.priorityLevel - 1, 0, a[0])//填充新下标
             this.conditionsConfig.conditionNodes.map((item, index) => {
@@ -225,10 +225,10 @@ export default {
             for (var i = 0; i < this.conditionsConfig.conditionNodes.length; i++) {
                 this.conditionsConfig.conditionNodes[i].error = this.$func.conditionStr(this.conditionsConfig, i) == "请设置条件" && i != this.conditionsConfig.conditionNodes.length - 1
             }
-            this.$store.commit('updateConditionsConfig',{
+            this.setConditionsConfig({
                 value:this.conditionsConfig,
                 flag:true,
-                id:this.$store.state.conditionsConfig.id
+                id:this.conditionsConfig1.id
             })
         },
         addConditionRole() {
