@@ -77,7 +77,7 @@ export default {
                             "opt2": "",//右侧符号 < ≤
                             "columnDbname": "",//条件字段名称
                             "columnType": "",//条件字段类型
-                            "showType": "",//3多选 其他
+                            "showType": "",//checkBox多选 其他
                             "showName": "",//展示名
                             "fixedDownBoxValue": ""//多选数组
                         }],

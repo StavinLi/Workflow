@@ -17,7 +17,7 @@
                                 <input type="text" placeholder="请选择具体人员/角色/部门" v-if="conditionConfig.nodeUserList.length == 0" @click="addConditionRole">
                             </p>
                         </div>
-                        <div v-else-if="item.columnType == 'String' && item.showType == 3">
+                        <div v-else-if="item.columnType == 'String' && item.showType == 'checkBox'">
                             <p class="check_box">
                                 <a :class="$func.toggleStrClass(item,item1.key)&&'active'" @click="toStrChecked(item,item1.key)"
                                 v-for="(item1,index1) in JSON.parse(item.fixedDownBoxValue)" :key="index1">{{item1.value}}</a>
@@ -157,7 +157,7 @@ export default {
                     if (columnId == 0) {
                         this.conditionList.push({ columnId: 0 })
                     } else {
-                        this.conditionList.push(this.conditions.filter(item => { return item.columnId == columnId; })[0])
+                        this.conditionList.push(this.conditions.filter(item => item.columnId == columnId)[0])
                     }
                 }
             }
@@ -174,34 +174,34 @@ export default {
                     this.conditionConfig.nodeUserList == [];
                     this.conditionConfig.conditionList.push({
                         "type": 1,
-                        "columnId": columnId,
+                        columnId,
                         "showName": '发起人'
                     });
                 } else {
                     if (columnType == "Double") {
                         this.conditionConfig.conditionList.push({
-                            "showType": showType,
-                            "columnId": columnId,
+                            showType,
+                            columnId,
                             "type": 2,
-                            "showName": showName,
+                            showName,
                             "optType": "1",
                             "zdy1": "2",
                             "opt1": "<",
                             "zdy2": "",
                             "opt2": "<",
                             "columnDbname": columnName,
-                            "columnType": columnType,
+                            columnType,
                         })
-                    } else if (columnType == "String" && showType == "3") {
+                    } else if (columnType == "String" && showType == "checkBox") {
                         this.conditionConfig.conditionList.push({
-                            "showType": showType,
-                            "columnId": columnId,
+                            showType,
+                            columnId,
                             "type": 2,
-                            "showName": showName,
+                            showName,
                             "zdy1": "",
                             "columnDbname": columnName,
-                            "columnType": columnType,
-                            "fixedDownBoxValue": fixedDownBoxValue
+                            columnType,
+                            fixedDownBoxValue
                         })
                     }
                 }
@@ -226,9 +226,9 @@ export default {
                 this.conditionsConfig.conditionNodes[i].error = this.$func.conditionStr(this.conditionsConfig, i) == "请设置条件" && i != this.conditionsConfig.conditionNodes.length - 1
             }
             this.setConditionsConfig({
-                value:this.conditionsConfig,
-                flag:true,
-                id:this.conditionsConfig1.id
+                value: this.conditionsConfig,
+                flag: true,
+                id: this.conditionsConfig1.id
             })
         },
         addConditionRole() {

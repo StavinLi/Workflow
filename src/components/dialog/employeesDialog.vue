@@ -91,11 +91,11 @@ export default {
         targetId: item.id,
         name: item.employeeName || item.departmentName
       }))
-      this.$emit('change',checkedList)
+      this.$emit('change', checkedList)
     },
     delList(){
-      this.checkedDepartmentList=[];
-      this.checkedEmployessList=[]
+      this.checkedDepartmentList= [];
+      this.checkedEmployessList= []
     }
   }
 }

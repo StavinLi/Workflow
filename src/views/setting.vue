@@ -133,14 +133,10 @@ export default {
 		},
 		zoomSize(type) {
 			if (type == 1) {
-				if (this.nowVal == 50) {
-					return;
-				}
+				if (this.nowVal == 50) return;
 				this.nowVal -= 10;
 			} else {
-				if (this.nowVal == 300) {
-					return;
-				}
+				if (this.nowVal == 300) return;
 				this.nowVal += 10;
 			}
 		}

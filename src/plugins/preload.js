@@ -39,11 +39,11 @@ All.prototype = {
     },
     arrToStr(arr) {
         if (arr) {
-            return arr.map(item => { return item.name }).toString()
+            return arr.map(item => item.name).toString()
         }
     },
     toggleClass(arr, elem, key = 'id') {
-        return arr.some(item => { return item[key] == elem[key] });
+        return arr.some(item => item[key] == elem[key]);
     },
     toChecked(arr, elem, key = 'id') {
         var isIncludes = this.toggleClass(arr, elem, key);
@@ -119,10 +119,10 @@ All.prototype = {
                 if (columnId == 0) {
                     if (nodeUserList.length != 0) {
                         str += '发起人属于：'
-                        str += nodeUserList.map(item => { return item.name }).join("或") + " 并且 "
+                        str += nodeUserList.map(item => item.name).join("或") + " 并且 "
                     }
                 }
-                if (columnType == "String" && showType == "3") {
+                if (columnType == "String" && showType == "checkBox") {
                     if (zdy1) {
                         str += showName + '属于：' + this.dealStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
                     }
@@ -150,7 +150,7 @@ All.prototype = {
     }, 
     toggleStrClass(item, key) {
         let a = item.zdy1 ? item.zdy1.split(",") : []
-        return a.some(item => { return item == key });
+        return a.some(item => item == key );
     },
 }
 
