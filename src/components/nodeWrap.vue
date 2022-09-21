@@ -59,7 +59,7 @@
                                     <div class="sort-right" v-if="index!=nodeConfig.conditionNodes.length-1" @click="arrTransfer(index)">&gt;</div>
                                     <div class="content" @click="setPerson(item.priorityLevel)">{{$func.conditionStr(nodeConfig,index)}}</div>
                                     <div class="error_tip" v-if="isTried&&item.error">
-                                        <i class="anticon anticon-exclamation-circle" style="color: rgb(242, 86, 67);"></i>
+                                        <i class="anticon anticon-exclamation-circle"></i>
                                     </div>
                                 </div>
                                 <addNode :childNodeP.sync="item.childNode"></addNode>
