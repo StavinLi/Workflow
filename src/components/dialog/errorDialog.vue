@@ -1,3 +1,9 @@
+<!--
+ * @Date: 2022-08-04 16:29:35
+ * @LastEditors: StavinLi
+ * @LastEditTime: 2022-09-21 11:16:58
+ * @FilePath: /Workflow/src/components/dialog/errorDialog.vue
+-->
 <template>
   <el-dialog title="提示" :visible.sync="visibleDialog">
     <div class="ant-confirm-body">
@@ -25,17 +31,17 @@
 <script>
 export default {
   props: ["list", "visible"],
-  data(){
+  data() {
     return {
       visibleDialog: false,
     }
   },
-  watch:{
-    visible(val){
+  watch: {
+    visible(val) {
       this.visibleDialog = val
     },
-    visibleDialog(val){
-      this.$emit('update:visible',val)
+    visibleDialog(val) {
+      this.$emit('update:visible', val)
     }
   }
 }
@@ -43,23 +49,24 @@ export default {
 
 <style scoped>
 .ant-confirm-body .ant-confirm-title {
-    color: rgba(0, 0, 0, .85);
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 1.4;
-    display: block;
-    overflow: hidden
+  color: rgba(0, 0, 0, .85);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.4;
+  display: block;
+  overflow: hidden
 }
 
 .ant-confirm-body .ant-confirm-content {
-    margin-left: 38px;
-    font-size: 14px;
-    color: rgba(0, 0, 0, .65);
-    margin-top: 8px
+  margin-left: 38px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, .65);
+  margin-top: 8px
 }
+
 .ant-confirm-body>.anticon {
-    font-size: 22px;
-    margin-right: 16px;
-    float: left
+  font-size: 22px;
+  margin-right: 16px;
+  float: left
 }
 </style>

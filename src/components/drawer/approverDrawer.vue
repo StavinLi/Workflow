@@ -96,30 +96,30 @@
 <script>
 import employeesDialog from '../dialog/employeesDialog.vue'
 import roleDialog from '../dialog/roleDialog.vue'
-import {mapState, mapMutations} from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
-    components: { employeesDialog, roleDialog},
+    components: { employeesDialog, roleDialog },
     props: ['directorMaxLevel'],
-    data(){
+    data() {
         return {
-            approverConfig:{},
+            approverConfig: {},
             approverVisible: false,
             approverRoleVisible: false,
             approverEmplyessList: [],
             checkedRoleList: [],
-            checkedList:[]
+            checkedList: []
         }
     },
-     computed:{
-        ...mapState(['approverConfig1','approverDrawer']),
+    computed: {
+        ...mapState(['approverConfig1', 'approverDrawer']),
     },
-    watch:{
-        approverConfig1(val){
+    watch: {
+        approverConfig1(val) {
             this.approverConfig = val.value;
         }
     },
-    methods:{
-        ...mapMutations(['setApproverConfig','setApprover']),
+    methods: {
+        ...mapMutations(['setApproverConfig', 'setApprover']),
         changeRange() {
             this.approverConfig.nodeUserList = [];
         },
@@ -148,45 +148,49 @@ export default {
             this.approverConfig.nodeUserList = data;
             this.approverVisible = false;
         },
-        sureRoleApprover(data){
+        sureRoleApprover(data) {
             this.approverConfig.nodeUserList = data;
             this.approverRoleVisible = false;
         },
         saveApprover() {
             this.approverConfig.error = !this.$func.setApproverStr(this.approverConfig)
             this.setApproverConfig({
-                value:this.approverConfig,
-                flag:true,
-                id:this.approverConfig1.id
+                value: this.approverConfig,
+                flag: true,
+                id: this.approverConfig1.id
             })
             this.$emit("update:nodeConfig", this.approverConfig);
             this.closeDrawer()
         },
-        closeDrawer(){
+        closeDrawer() {
             this.setApprover(false)
         }
     }
 }
 </script>
 <style lang="less">
-.set_promoter{
+.set_promoter {
     .approver_content {
         padding-bottom: 10px;
         border-bottom: 1px solid #f2f2f2;
     }
+
     .approver_self_select .el-button,
     .approver_content .el-button {
         margin-bottom: 20px;
     }
+
     .approver_content .el-radio,
     .approver_some .el-radio,
     .approver_self_select .el-radio {
         width: 27%;
         margin-bottom: 20px;
     }
+
     .approver_manager p {
         line-height: 32px;
     }
+
     .approver_manager select {
         width: 420px;
         height: 32px;
@@ -194,27 +198,32 @@ export default {
         border-radius: 4px;
         border: 1px solid rgba(217, 217, 217, 1);
     }
+
     .approver_manager p.tip {
         margin: 10px 0 22px 0;
         font-size: 12px;
         line-height: 16px;
         color: #f8642d;
     }
+
     .approver_self {
         padding: 28px 20px;
     }
+
     .approver_self_select,
     .approver_manager,
     .approver_content,
     .approver_some {
         padding: 20px 20px 0;
     }
+
     .approver_manager p:first-of-type,
     .approver_some p {
         line-height: 19px;
         font-size: 14px;
         margin-bottom: 14px;
     }
+
     .approver_self_select h3 {
         margin: 5px 0 20px;
         font-size: 14px;

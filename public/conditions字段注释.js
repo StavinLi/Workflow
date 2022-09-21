@@ -1,7 +1,7 @@
 /*
  * @Date: 2022-08-04 16:29:35
- * @LastEditors: lichen39 lichen39@58.com
- * @LastEditTime: 2022-09-20 19:41:47
+ * @LastEditors: StavinLi
+ * @LastEditTime: 2022-09-21 14:18:20
  * @FilePath: /Workflow/public/conditions字段注释.js
  */
 export default {
@@ -12,7 +12,7 @@ export default {
       //条件id  columnId == 0 为发起人
       "columnId": "1090",
       //columnType == "String" && showType == "checkBox"为多选  columnType == "Double"为区间
-      "showType": "input", 
+      "showType": "input",
       "showName": "预计采购总费用",
       //columnName 条件自定义字段
       "columnName": "planProcurementTotalMoney",
@@ -26,7 +26,7 @@ export default {
       "showName": "采购类型",
       "columnName": "procurementType",
       "columnType": "String",
-      "fixedDownBoxValue": "{\"1\":{\"key\":\"1\",\"value\":\"新开园区集中采购\",\"column\":\"\",\"type\":\"1\"}}" 
+      "fixedDownBoxValue": "{\"1\":{\"key\":\"1\",\"value\":\"新开园区集中采购\",\"column\":\"\",\"type\":\"1\"}}"
     },
     {
       "columnId": "1093",

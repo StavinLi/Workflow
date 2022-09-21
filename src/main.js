@@ -1,3 +1,9 @@
+/*
+ * @Date: 2022-08-04 16:29:35
+ * @LastEditors: StavinLi
+ * @LastEditTime: 2022-09-21 14:08:37
+ * @FilePath: /Workflow/src/main.js
+ */
 import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App.vue'
@@ -13,10 +19,10 @@ Vue.component('addNode', addNode); //初始化组件
 Vue.prototype.$func = func;
 Vue.config.productionTip = false;
 Vue.directive('enterNumber', {
-    bind: function(el, { value = 2 }) {
+    bind: function (el, { value = 2 }) {
         el = el.nodeName == "INPUT" ? el : el.children[0]
         var RegStr = value == 0 ? `^[\\+\\-]?\\d+\\d{0,0}` : `^[\\+\\-]?\\d+\\.?\\d{0,${value}}`;
-        el.addEventListener('keyup', function() {
+        el.addEventListener('keyup', function () {
             el.value = el.value.match(new RegExp(RegStr, 'g'));
             el.dispatchEvent(new Event('input'))
         })
@@ -25,7 +31,7 @@ Vue.directive('enterNumber', {
 
 Vue.directive('focus', {
     // 当被绑定的元素插入到 DOM 中时……
-    inserted: function(el) {
+    inserted: function (el) {
         el.focus()
     }
 });

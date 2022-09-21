@@ -54,7 +54,7 @@ import conditionDrawer from '@/components/drawer/conditionDrawer'
 import { getWorkFlowData, setWorkFlowData } from '@/plugins/api.js'
 import { mapMutations } from 'vuex'
 export default {
-	components:{
+	components: {
 		errorDialog,
 		promoterDrawer,
 		approverDrawer,
@@ -74,9 +74,9 @@ export default {
 		};
 	},
 	created() {
-		getWorkFlowData({workFlowDefId: this.$route.params.workFlowDefId}).then(({data}) => {			
+		getWorkFlowData({ workFlowDefId: this.$route.params.workFlowDefId }).then(({ data }) => {
 			this.processConfig = data;
-			let {nodeConfig,flowPermission,directorMaxLevel,workFlowDef,tableId} = data
+			let { nodeConfig, flowPermission, directorMaxLevel, workFlowDef, tableId } = data
 			this.nodeConfig = nodeConfig;
 			this.flowPermission = flowPermission;
 			this.directorMaxLevel = directorMaxLevel;
@@ -85,16 +85,16 @@ export default {
 		})
 	},
 	methods: {
-		...mapMutations(['setTableId','setIsTried']),
+		...mapMutations(['setTableId', 'setIsTried']),
 		toReturn() {
 			//window.location.href = ""
 		},
-		reErr({childNode}) {
+		reErr({ childNode }) {
 			if (childNode) {
-				let {type,error,nodeName,conditionNodes} = childNode
+				let { type, error, nodeName, conditionNodes } = childNode
 				if (type == 1 || type == 2) {
 					if (error) {
-						this.tipList.push({ name: nodeName, type: ["","审核人","抄送人"][type] })
+						this.tipList.push({ name: nodeName, type: ["", "审核人", "抄送人"][type] })
 					}
 					this.reErr(childNode)
 				} else if (type == 3) {
@@ -125,10 +125,10 @@ export default {
 			console.log(JSON.stringify(this.processConfig))
 			let res = await setWorkFlowData(this.processConfig)
 			if (res.code == 200) {
-					this.$message.success("设置成功");
-					setTimeout(function () {
-							window.location.href = ""
-					}, 200)
+				this.$message.success("设置成功");
+				setTimeout(function () {
+					window.location.href = ""
+				}, 200)
 			}
 		},
 		zoomSize(type) {
@@ -145,6 +145,7 @@ export default {
 </script>
 <style>
 @import "../css/workflow.css";
+
 .error-modal-list {
 	width: 455px;
 }

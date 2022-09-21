@@ -32,67 +32,9 @@
   background-size: 14px 14px;
   margin-bottom: 14px;
 }
-.person_tree ul,
-.has_selected ul {
-    height: 420px;
-    overflow-y: auto;
-}
-.person_tree li {
-    padding: 5px 0;
-}
-.person_tree li i {
-    float: right;
-    padding-left: 24px;
-    padding-right: 10px;
-    color: #3195f8;
-    font-size: 12px;
-    cursor: pointer;
-    background: url(~@/assets/images/next_level_active.png) no-repeat 10px
-        center;
-    border-left: 1px solid rgb(238, 238, 238);
-}
-.person_tree li a.active + i {
-    color: rgb(197, 197, 197);
-    background-image: url(~@/assets/images/next_level.png);
-    pointer-events: none;
-}
+
 .person_tree img {
     width: 14px;
     vertical-align: middle;
     margin-right: 5px;
-}
-
-.has_selected {
-  width: 276px;
-  height: 100%;
-  font-size: 12px;
-}
-.has_selected ul {
-  height: 460px;
-}
-.has_selected p {
-  padding-left: 19px;
-  padding-right: 20px;
-  line-height: 37px;
-  border-bottom: 1px solid #f2f2f2;
-}
-.has_selected p a {
-  float: right;
-}
-.has_selected ul li {
-  margin: 11px 26px 13px 19px;
-  line-height: 17px;
-}
-.has_selected li span {
-  vertical-align: middle;
-}
-.has_selected li img:first-of-type {
-  width: 14px;
-  vertical-align: middle;
-  margin-right: 5px;
-}
-.has_selected li img:last-of-type {
-  float: right;
-  margin-top: 2px;
-  width: 14px;
 }

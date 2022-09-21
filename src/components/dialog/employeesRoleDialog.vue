@@ -12,49 +12,9 @@
                   <span v-for="(item,index) in departments.titleDepartments" class="ellipsis" 
                   :key="index+'a'" @click="getDepartmentList(item.id)">{{item.departmentName}}</span>   
               </p>
-              <ul style="height: 360px;" v-if="activeName==1">
-                  <li v-for="(item,index) in departments.childDepartments" :key="index+'b'" class="check_box" :class="{not: !isDepartment}">
-                      <a v-if="isDepartment" :class="$func.toggleClass(checkedDepartmentList,item)&&'active'" @click="$func.toChecked(checkedDepartmentList,item)">
-                        <img src="@/assets/images/icon_file.png">{{item.departmentName}}</a>
-                      <a v-else><img src="@/assets/images/icon_file.png">{{item.departmentName}}</a>
-                      <i @click="getDepartmentList(item.id)">下级</i>
-                  </li>
-                  <li v-for="(item,index) in departments.employees" :key="index+'c'" class="check_box">
-                      <a :class="$func.toggleClass(checkedEmployessList,item)&&'active'" @click="$func.toChecked(checkedEmployessList,item)" :title="item.departmentNames">
-                          <img src="@/assets/images/icon_people.png">{{item.employeeName}}</a>
-                  </li>
-              </ul>
-              <ul style="height: 360px;" v-if="activeName==2">
-                  <li v-for="(item,index) in roles" :key="index+'c'" class="check_box">
-                      <a :class="$func.toggleClass(checkedRoleList,item,'roleId')&&'active'" @click="$func.toChecked(checkedRoleList,item,'roleId')" :title="item.description">
-                          <img src="@/assets/images/icon_role.png">{{item.roleName}}</a>
-                  </li>
-              </ul>
+              <selectBox :list="list" style="height: 360px;"/>
           </div>
-          <div class="has_selected l">
-              <p class="clear">已选（{{total}}）
-                  <a @click="delList">清空</a>
-              </p>
-              <ul>
-                  <li v-for="(item,index) in checkedRoleList" :key="index+'e'">
-                      <img src="@/assets/images/icon_role.png">
-                      <span>{{item.roleName}}</span>
-                      <img src="@/assets/images/cancel.png" @click="$func.removeEle(checkedRoleList,item,'roleId')">
-                  </li>
-                  <template v-if="isDepartment">
-                    <li v-for="(item,index) in checkedDepartmentList" :key="index+'e1'">
-                      <img src="@/assets/images/icon_file.png">
-                      <span>{{item.departmentName}}</span>
-                      <img src="@/assets/images/cancel.png" @click="$func.removeEle(checkedDepartmentList,item)">
-                  </li>
-                  </template>
-                  <li v-for="(item,index) in checkedEmployessList" :key="index+'e2'">
-                      <img src="@/assets/images/icon_people.png">
-                      <span>{{item.employeeName}}</span>
-                      <img src="@/assets/images/cancel.png" @click="$func.removeEle(checkedEmployessList,item)">
-                  </li>
-              </ul>
-          </div>
+          <selectResult :total="total" @del="delList" :list="resList"/>
       </div>
       <span slot="footer" class="dialog-footer">
           <el-button @click="$emit('update:visible',false)">取 消</el-button>
@@ -64,69 +24,116 @@
 </template>
 
 <script>
+import selectBox from '../selectBox.vue';
+import selectResult from '../selectResult.vue';
 import mixins from './mixins'
 export default {
-  mixins: [ mixins],
-  props:['visible','data','isDepartment'],
-  watch:{
-    visible(val){
+  components: { selectBox, selectResult },
+  mixins: [mixins],
+  props: ['visible', 'data', 'isDepartment'],
+  watch: {
+    visible(val) {
       this.visibleDialog = this.visible
-      if(val){
+      if (val) {
         this.activeName = "1";
         this.getDepartmentList();
         this.searchVal = "";
-        this.checkedEmployessList = this.data.filter(item=>item.type===1).map(({name,targetId})=>({
+        this.checkedEmployessList = this.data.filter(item => item.type === 1).map(({ name, targetId }) => ({
           employeeName: name,
           id: targetId
         }));
-        this.checkedRoleList = this.data.filter(item=>item.type===2).map(({name,targetId})=>({
+        this.checkedRoleList = this.data.filter(item => item.type === 2).map(({ name, targetId }) => ({
           roleName: name,
           roleId: targetId
         }));
-        this.checkedDepartmentList = this.data.filter(item=>item.type===3).map(({name,targetId})=>({
+        this.checkedDepartmentList = this.data.filter(item => item.type === 3).map(({ name, targetId }) => ({
           departmentName: name,
           id: targetId
         }));
       }
     },
-    visibleDialog(val){
-      this.$emit('update:visible',val)
+    visibleDialog(val) {
+      this.$emit('update:visible', val)
     }
   },
-  computed:{
-    total(){
+  computed: {
+    total() {
       return this.checkedEmployessList.length + this.checkedRoleList.length + this.checkedDepartmentList.length
+    },
+    list() {
+      if (this.activeName === '2') {
+        return [{
+          type: 'role',
+          not: false,
+          data: this.roles,
+          isActiveItem: (item) => this.$func.toggleClass(this.checkedRoleList, item, 'roleId'),
+          change: (item) => this.$func.toChecked(this.checkedRoleList, item, 'roleId')
+        }]
+      } else {
+        return [{
+          isDepartment: this.isDepartment,
+          type: 'department',
+          data: this.departments.childDepartments,
+          isActive: (item) => this.$func.toggleClass(this.checkedDepartmentList, item),
+          change: (item) => this.$func.toChecked(this.checkedDepartmentList, item),
+          next: (item) => this.getDepartmentList(item.id)
+        }, {
+          type: 'employee',
+          data: this.departments.employees,
+          isActive: (item) => this.$func.toggleClass(this.checkedEmployessList, item),
+          change: (item) => this.$func.toChecked(this.checkedEmployessList, item),
+        }]
+      }
+    },
+    resList() {
+      let data = [{
+        type: 'role',
+        data: this.checkedRoleList,
+        cancel: (item) => this.$func.removeEle(this.checkedRoleList, item, 'roleId')
+      }, {
+        type: 'employee',
+        data: this.checkedEmployessList,
+        cancel: (item) => this.$func.removeEle(this.checkedEmployessList, item)
+      }]
+      if (this.isDepartment) {
+        data.splice(1, 0, {
+          type: 'department',
+          data: this.checkedDepartmentList,
+          cancel: (item) => this.$func.removeEle(this.checkedDepartmentList, item)
+        })
+      }
+      return data
     }
   },
-  data(){
+  data() {
     return {
       checkedRoleList: [],
       checkedEmployessList: [],
       checkedDepartmentList: []
     }
   },
-  methods:{
+  methods: {
     handleClick() {
       this.searchVal = "";
       this.conditionRoleSearchName = "";
       if (this.activeName == 1) {
-          this.getDepartmentList();
+        this.getDepartmentList();
       } else {
-          this.getRoleList();
+        this.getRoleList();
       }
     },
-    saveDialog(){
-      let checkedList = [...this.checkedRoleList,...this.checkedEmployessList,...this.checkedDepartmentList].map(item=>({
-        type: item.employeeName?1:(item.roleName?2:3),
+    saveDialog() {
+      let checkedList = [...this.checkedRoleList, ...this.checkedEmployessList, ...this.checkedDepartmentList].map(item => ({
+        type: item.employeeName ? 1 : (item.roleName ? 2 : 3),
         targetId: item.id || item.roleId,
         name: item.employeeName || item.roleName || item.departmentName
       }))
-      this.$emit('change',checkedList)
+      this.$emit('change', checkedList)
     },
-    delList(){
-      this.checkedEmployessList=[];
-      this.checkedRoleList=[];
-      this.checkedDepartmentList=[]
+    delList() {
+      this.checkedEmployessList = [];
+      this.checkedRoleList = [];
+      this.checkedDepartmentList = []
     }
   }
 }

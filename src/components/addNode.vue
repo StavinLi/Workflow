@@ -105,6 +105,7 @@ export default {
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;
     position: relative;
+
     &:before {
         content: "";
         position: absolute;
@@ -118,6 +119,7 @@ export default {
         height: 100%;
         background-color: #cacaca
     }
+
     .add-node-btn {
         user-select: none;
         width: 240px;
@@ -128,6 +130,7 @@ export default {
         flex-shrink: 0;
         -webkit-box-flex: 1;
         flex-grow: 1;
+
         .btn {
             outline: none;
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -140,14 +143,17 @@ export default {
             line-height: 30px;
             -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
             transition: all .3s cubic-bezier(.645, .045, .355, 1);
+
             .iconfont {
                 color: #fff;
                 font-size: 16px
             }
+
             &:hover {
                 transform: scale(1.3);
                 box-shadow: 0 13px 27px 0 rgba(0, 0, 0, .1)
             }
+
             &:active {
                 transform: none;
                 background: #1e83e9;
@@ -160,12 +166,14 @@ export default {
 <style lang="less">
 .add-node-popover-body {
     display: flex;
+
     .add-node-popover-item {
         margin-right: 10px;
         cursor: pointer;
         text-align: center;
         flex: 1;
-        color: #191f25!important;
+        color: #191f25 !important;
+
         .item-wrapper {
             user-select: none;
             display: inline-block;
@@ -176,40 +184,48 @@ export default {
             border: 1px solid #e2e2e2;
             border-radius: 50%;
             transition: all .3s cubic-bezier(.645, .045, .355, 1);
+
             .iconfont {
                 font-size: 35px;
                 line-height: 80px
             }
         }
-        &.approver{
+
+        &.approver {
             .item-wrapper {
                 color: #ff943e
             }
         }
-        &.notifier{
+
+        &.notifier {
             .item-wrapper {
                 color: #3296fa
             }
         }
-        &.condition{
+
+        &.condition {
             .item-wrapper {
                 color: #15bc83
             }
         }
-        &:hover{
+
+        &:hover {
             .item-wrapper {
                 background: #3296fa;
                 box-shadow: 0 10px 20px 0 rgba(50, 150, 250, .4)
             }
+
             .iconfont {
                 color: #fff
             }
         }
-        &:active{
+
+        &:active {
             .item-wrapper {
                 box-shadow: none;
                 background: #eaeaea
             }
+
             .iconfont {
                 color: inherit
             }

@@ -1,3 +1,9 @@
+/*
+ * @Date: 2022-08-04 16:29:35
+ * @LastEditors: StavinLi
+ * @LastEditTime: 2022-09-21 14:13:59
+ * @FilePath: /Workflow/src/plugins/axios.js
+ */
 "use strict";
 import axios from "axios";
 import {
@@ -19,7 +25,7 @@ function tryHideFullScreenLoading() {
     if (needLoadingRequestCount <= 0) return
     needLoadingRequestCount--
     if (needLoadingRequestCount === 0) {
-        setTimeout(function() {
+        setTimeout(function () {
             endLoading()
         }, 200)
     }

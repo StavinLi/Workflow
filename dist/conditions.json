@@ -4,7 +4,7 @@
   "data": [
     {
       "columnId": "1090",
-      "showType": "1",
+      "showType": "input",
       "showName": "预计采购总费用",
       "columnName": "planProcurementTotalMoney",
       "columnType": "Double",
@@ -12,7 +12,7 @@
     },
     {
       "columnId": "1092",
-      "showType": "3",
+      "showType": "checkBox",
       "showName": "采购类型",
       "columnName": "procurementType",
       "columnType": "String",
@@ -20,7 +20,7 @@
     },
     {
       "columnId": "1093",
-      "showType": "1",
+      "showType": "input",
       "showName": "园区面积",
       "columnName": "parkArea",
       "columnType": "Double",

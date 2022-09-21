@@ -1,3 +1,9 @@
+<!--
+ * @Date: 2022-08-04 16:29:35
+ * @LastEditors: StavinLi
+ * @LastEditTime: 2022-09-21 14:14:32
+ * @FilePath: /Workflow/src/components/drawer/copyerDrawer.vue
+-->
 <template>
     <el-drawer :append-to-body="true" title="抄送人设置" :visible.sync="copyerDrawer" direction="rtl" class="set_copyer" size="550px" :before-close="saveCopyer"> 
         <div class="demo-drawer__content">
@@ -27,12 +33,12 @@
 </template>
 <script>
 import employeesRoleDialog from '../dialog/employeesRoleDialog.vue'
-import {mapState, mapMutations} from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
-    components:{
+    components: {
         employeesRoleDialog
     },
-    data(){
+    data() {
         return {
             copyerConfig: {},
             ccSelfSelectFlag: [],
@@ -40,17 +46,17 @@ export default {
             checkedList: [],
         }
     },
-    computed:{
-        ...mapState(['copyerDrawer','copyerConfig1']),
+    computed: {
+        ...mapState(['copyerDrawer', 'copyerConfig1']),
     },
-    watch:{
-        copyerConfig1(val){
+    watch: {
+        copyerConfig1(val) {
             this.copyerConfig = val.value;
             this.ccSelfSelectFlag = this.copyerConfig.ccSelfSelectFlag == 0 ? [] : [this.copyerConfig.ccSelfSelectFlag]
         }
     },
-    methods:{
-        ...mapMutations(['setCopyerConfig','setCopyer']),
+    methods: {
+        ...mapMutations(['setCopyerConfig', 'setCopyer']),
         addCopyer() {
             this.copyerVisible = true;
             this.checkedList = this.copyerConfig.nodeUserList
@@ -63,26 +69,28 @@ export default {
             this.copyerConfig.ccSelfSelectFlag = this.ccSelfSelectFlag.length == 0 ? 0 : 1;
             this.copyerConfig.error = !this.$func.copyerStr(this.copyerConfig);
             this.setCopyerConfig({
-                value:this.copyerConfig,
-                flag:true,
-                id:this.copyerConfig1.id
+                value: this.copyerConfig,
+                flag: true,
+                id: this.copyerConfig1.id
             })
             this.closeDrawer();
         },
-        closeDrawer(){
+        closeDrawer() {
             this.setCopyer(false)
-        },     
+        },
     }
 }
 </script>
 
 <style lang="less">
-.set_copyer{
-    .copyer_content{
+.set_copyer {
+    .copyer_content {
         padding: 20px 20px 0;
-        .el-button{
+
+        .el-button {
             margin-bottom: 20px;
         }
+
         .el-checkbox {
             margin-bottom: 20px;
         }

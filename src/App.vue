@@ -18,6 +18,7 @@ export default {
     color: #333333;
     margin-top: 60px;
 }
+
 a,
 abbr,
 acronym,
@@ -104,34 +105,43 @@ video {
     font: inherit;
     vertical-align: baseline;
 }
+
 .clear:before,
 .clear:after {
     content: " ";
     display: table;
 }
+
 .clear:after {
     clear: both;
 }
+
 .ellipsis {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .l {
     float: left;
 }
+
 input {
     text-indent: 10px;
 }
+
 select {
     text-indent: 8px;
 }
+
 .ml_10 {
     margin-left: 10px;
 }
+
 .mr_10 {
     margin-right: 10px;
 }
+
 .radio_box a,
 .check_box a {
     font-size: 12px;
@@ -140,22 +150,26 @@ select {
     margin-right: 30px;
     cursor: pointer;
     color: #333;
-    white-space: pre;
 }
+
 .check_box.not a:hover {
     color: #333;
 }
+
 .check_box.not a::before,
 .check_box.not a:hover::before {
     border: none;
 }
+
 .check_box.not.active {
     background: #f3f3f3;
 }
+
 .radio_box a:hover::before,
 .check_box a:hover::before {
     border: 1px solid #46a6fe;
 }
+
 .radio_box a::before,
 .check_box a::before {
     position: absolute;
@@ -167,9 +181,11 @@ select {
     top: 1px;
     content: "";
 }
+
 .radio_box a::before {
     border-radius: 50%;
 }
+
 .check-dot.active::after,
 .radio_box a.active::after,
 .check_box a.active::after {
@@ -181,9 +197,11 @@ select {
     left: 3px;
     content: "";
 }
+
 .radio_box a.active::after {
     background: #46a6fe;
 }
+
 .check_box a.active::after {
     background: url(~@/assets/images/check_box.png) no-repeat center;
 }

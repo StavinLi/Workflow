@@ -417,7 +417,9 @@ mark {
 .anticon-right:before {
     content: "\E61F"
 }
-
+.anticon-exclamation-circle{
+    color: rgb(242, 86, 67)
+}
 .anticon-exclamation-circle:before {
     content: "\E62C"
 }
@@ -1404,8 +1406,7 @@ html {
     min-width: -moz-min-content;
     min-width: min-content;
     background-color: #f5f5f7;
-    -webkit-transform-origin: 0 0 0;
-    transform-origin: 0 0 0
+    transform-origin: 50% 0px 0px;
 }
 
 .dingflow-design .node-wrap {

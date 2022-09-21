@@ -1,14 +1,14 @@
-function All() {}
+function All() { }
 All.prototype = {
     timer: "",
     debounce(fn, delay = 500) {
         var _this = this;
-        return function(arg) {
+        return function (arg) {
             //获取函数的作用域和变量
             let that = this;
             let args = arg;
             clearTimeout(_this.timer) // 清除定时器
-            _this.timer = setTimeout(function() {
+            _this.timer = setTimeout(function () {
                 fn.call(that, args)
             }, delay)
         }
@@ -107,7 +107,7 @@ All.prototype = {
             })
         }
         return arr.join("或")
-    },  
+    },
     conditionStr(nodeConfig, index) {
         var { conditionList, nodeUserList } = nodeConfig.conditionNodes[index];
         if (conditionList.length == 0) {
@@ -147,10 +147,10 @@ All.prototype = {
                 return "发起人自选"
             }
         }
-    }, 
+    },
     toggleStrClass(item, key) {
         let a = item.zdy1 ? item.zdy1.split(",") : []
-        return a.some(item => item == key );
+        return a.some(item => item == key);
     },
 }
 
