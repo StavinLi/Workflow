@@ -99,8 +99,8 @@ if (type == 1 || type == 2) {
 
 > git clone https://github.com/StavinLi/Workflow.git 点个赞吧！
 
-#### 项目运行
-> 1.环境依赖  `npm i`
+#### 项目运行 **node14**
+> 1.环境依赖    `npm i`
 
 > 2.本地运行 `npm run serve` 
 
